@@ -1,0 +1,26 @@
+.card
+  .card-header
+    .d-flex
+      .h4.mr-auto <%= human_name.pluralize %>
+      = button_success 'New <%= human_name %>', new_<%= singular_table_name %>_path, 'plus'
+
+  .card-body
+    .table-responsive
+      table.table.table-striped.table-bordered.table-hover
+        thead.thead-light
+          tr
+<% attributes.each do |attribute| -%>
+            th <%= attribute.human_name %>
+<% end -%>
+            th Actions
+        tbody
+          - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
+            tr
+<% attributes.each do |attribute| -%>
+              td = <%= singular_table_name %>.<%= attribute.name %>
+<% end -%>
+              td
+                = button_primary 'Edit', edit_<%= singular_table_name %>_path(<%= singular_table_name %>), 'edit'
+                = button_danger 'Delete', <%= singular_table_name %>, 'x-square', data: { confirm: 'Are you sure?' }, method: :delete
+
+
