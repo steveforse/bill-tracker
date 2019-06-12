@@ -1,5 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  config.hosts << "forse.co"
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -11,6 +12,13 @@ Rails.application.configure do
 
   # Show full error reports.
   config.consider_all_requests_local = true
+
+  # Allow a specific IP address for Better Errors - DANGEROUS
+  BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
+
+  # Allow a specific IP address for Web Console - DANGEROUS
+  config.web_console.permissions = ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
+
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
