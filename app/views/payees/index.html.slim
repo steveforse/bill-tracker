@@ -1,0 +1,30 @@
+.card
+  .card-header
+    .d-flex
+      .h4.mr-auto Payees
+      = button_success 'New Payee', new_payee_path, 'plus'
+
+  .card-body
+    .table-responsive
+      table.table.table-striped.table-bordered.table-hover
+        thead.thead-light
+          tr
+            th Name
+            th Alternative name
+            th Website
+            th Phone number
+            th Description
+            th Actions
+        tbody
+          - @payees.each do |payee|
+            tr
+              td = payee.name
+              td = payee.alternative_name
+              td = payee.website
+              td = payee.phone_number
+              td = payee.description
+              td
+                = button_primary 'Edit', edit_payee_path(payee), 'edit'
+                = button_danger 'Delete', payee, 'x-square', data: { confirm: 'Are you sure?' }, method: :delete
+
+

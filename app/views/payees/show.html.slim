@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @payee.name
+p
+  strong Alternative name:
+  = @payee.alternative_name
+p
+  strong Website:
+  = @payee.website
+p
+  strong Phone number:
+  = @payee.phone_number
+p
+  strong Description:
+  = @payee.description
+
+=> link_to 'Edit', edit_payee_path(@payee)
+'|
+=< link_to 'Back', payees_path
