@@ -19,7 +19,7 @@ module ApplicationHelper
     html_options[:class] += " btn btn-#{style}"
     link_to url, html_options do
       if icon
-        content_tag(:i, '', class: ('fas fa-' + icon)) + text
+        content_tag(:i, '', class: ('fas fa-' + icon)) + ' ' + text
       else
         text
       end
