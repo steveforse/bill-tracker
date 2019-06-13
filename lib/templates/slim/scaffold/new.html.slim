@@ -1,5 +1,7 @@
-h1 New <%= singular_table_name %>
+.card
+  .card-header
+    .d-felx
+      .h4 New <%= singular_table_name.capitalize %>
+  .card-body
+    == render 'form'
 
-== render 'form'
-
-= link_to 'Back', <%= index_helper %>_path
