@@ -13,4 +13,8 @@ html
     = javascript_pack_tag 'bootstrap', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'icons', 'data-turbolinks-track': 'reload'
   body
-    = yield
+    .container
+      - flash.each do |key, value|
+        div class="#{flash_class(key)}"
+          = value
+      = yield

@@ -1,5 +1,20 @@
 # Defines top-level, app-wide helpers
 module ApplicationHelper
+  #########
+  # FLASH #
+  #########
+  def flash_class(level)
+    case level
+      when 'notice' then 'alert alert-info'
+      when 'success' then 'alert alert-success'
+      when 'error' then 'alert alert-danger'
+      when 'alert' then 'alert alert-warning'
+    end
+  end
+
+  ###########
+  # BUTTONS #
+  ###########
   def button_primary(text, url, icon=nil, html_options={})
     button_link_to(text, url, icon, 'primary', html_options)
   end
