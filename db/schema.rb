@@ -10,17 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_12_221351) do
-
-  create_table "payees", force: :cascade do |t|
-    t.string "name"
-    t.string "alternative_name"
-    t.string "website"
-    t.string "phone_number"
-    t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_payees_on_name", unique: true
-  end
+ActiveRecord::Schema.define(version: 0) do
 
 end

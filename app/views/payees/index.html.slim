@@ -10,7 +10,7 @@
         thead.thead-light
           tr
             th Name
-            th Alternative name
+            th Nickname
             th Website
             th Phone number
             th Description
@@ -19,7 +19,7 @@
           - @payees.each do |payee|
             tr
               td = payee.name
-              td = payee.alternative_name
+              td = payee.nickname
               td = payee.website
               td = payee.phone_number
               td = payee.description
