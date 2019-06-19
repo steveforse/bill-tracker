@@ -21,6 +21,8 @@
 <% end -%>
               td
                 = button_primary 'Edit', edit_<%= singular_table_name %>_path(<%= singular_table_name %>), 'edit'
-                = button_danger 'Delete', <%= singular_table_name %>, 'trash', data: { confirm: 'Are you sure?' }, method: :delete
+                = button_danger 'Delete', <%= singular_table_name %>, 'trash',
+                    data: { confirm: 'Are you sure you want to delete this record?' },
+                    method: :delete
 
 
