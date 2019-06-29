@@ -3,28 +3,30 @@
     .d-flex
       .h4.mr-auto Payees
       = button_success 'New Payee', new_payee_path, 'plus'
-
-  .card-body
-    .table-responsive
-      table.table.table-striped.table-bordered.table-hover
-        thead.thead-light
-          tr
-            th Name
-            th Nickname
-            th Website
-            th Phone number
-            th Actions
-        tbody
-          - @payees.each do |payee|
+  .card-body.p-0
+    - if @payees.any?
+      .table-responsive
+        table.table.table-striped.table-bordered.table-hover
+          thead.thead-light
             tr
-              td = payee.name
-              td = payee.nickname
-              td = payee.website
-              td = payee.phone_number
-              td.text-nowrap
-                = button_primary 'Details', payee_path(payee), 'info-circle'
-                = button_danger 'Delete', payee, 'trash',
-                    data: { confirm: 'Are you sure you want to delete this record?' },
-                    method: :delete
+              th Name
+              th Nickname
+              th Website
+              th Phone number
+              th Actions
+          tbody
+            - @payees.each do |payee|
+              tr
+                td = payee.name
+                td = payee.nickname
+                td = payee.website
+                td = payee.phone_number
+                td.text-nowrap
+                  = button_primary 'Details', payee_path(payee), 'info-circle'
+                  = button_danger 'Delete', payee, 'trash',
+                      data: { confirm: 'Are you sure you want to delete this record?' },
+                      method: :delete
+    - else
+      .h5.text-center.p-3 Create a payee to get started
 
 
