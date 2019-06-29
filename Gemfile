@@ -56,8 +56,12 @@ group :development, :test do
   # Finds those nasty N+1 inefficiencies
   gem 'bullet'
 
-  # BDD testing
-  gem 'rspec-rails'
+  # Use dev branch until rails 6 and rspec rails 4 drops
+  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails', branch: '4-0-dev'
+  gem 'rspec-core', git: 'https://github.com/rspec/rspec-core'
+  gem 'rspec-mocks', git: 'https://github.com/rspec/rspec-mocks'
+  gem 'rspec-support', git: 'https://github.com/rspec/rspec-support'
+  gem 'rspec-expectations', git: 'https://github.com/rspec/rspec-expectations'
 end
 
 group :development do
