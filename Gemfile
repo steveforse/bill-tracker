@@ -52,6 +52,9 @@ gem 'jbuilder', '~> 2.5'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+
+  # Finds those nasty N+1 inefficiencies
+  gem 'bullet'
 end
 
 group :development do
@@ -65,9 +68,6 @@ group :development do
 
   # Rails gem extension
   gem 'meta_request'
-
-  # Finds those nast N+1 inefficiencies
-  gem 'bullet'
 
   # Style guide enforcer
   gem 'rubocop-rails'
