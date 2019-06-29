@@ -4,7 +4,7 @@ class PayeesController < ApplicationController
   # GET /payees
   # GET /payees.json
   def index
-    @payees = Payee.all
+    @payees = Payee.all.decorate
   end
 
   # GET /payees/new
@@ -14,6 +14,10 @@ class PayeesController < ApplicationController
 
   # GET /payees/1/edit
   def edit
+  end
+
+  def show
+    @payee = @payee.decorate
   end
 
   # POST /payees
@@ -37,7 +41,7 @@ class PayeesController < ApplicationController
   def update
     respond_to do |format|
       if @payee.update(payee_params)
-        format.html { redirect_to payees_url, notice: 'Payee was successfully updated.' }
+        format.html { redirect_to payee_url(@payee), notice: 'Payee was successfully updated.' }
         format.json { render :show, status: :ok, location: @payee }
       else
         format.html { render :edit }
@@ -64,6 +68,6 @@ class PayeesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payee_params
-      params.require(:payee).permit(:name, :alternative_name, :website, :phone_number, :description)
+      params.require(:payee).permit(:name, :nickname, :website, :phone_number, :description)
     end
 end
