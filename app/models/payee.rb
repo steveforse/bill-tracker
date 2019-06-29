@@ -1,3 +1,9 @@
 class Payee < ApplicationRecord
-  validates :name, presence: true, uniqueness: true, allow_blank: false
+  strip_attributes
+
+  # Relations
+  has_many :schedules
+
+  # Validations
+  validates :name, presence: true, uniqueness: true, allow_blank: false, allow_nil: false
 end
