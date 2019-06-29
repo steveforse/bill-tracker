@@ -1,13 +1,12 @@
 class PayeeDecorator < Draper::Decorator
   delegate_all
 
-  # Define presentation-specific methods here. Helpers are accessed through
-  # `helpers` (aka `h`). You can override attributes, for example:
-  #
-  #   def created_at
-  #     helpers.content_tag :span, class: 'time' do
-  #       object.created_at.strftime("%a %m/%d/%y")
-  #     end
-  #   end
+  def website
+    h.link_to object.website.truncate(75), object.website
+  end
+
+  def phone_number
+    h.link_to object.phone_number, "tel:#{object.phone_number}"
+  end
 
 end
