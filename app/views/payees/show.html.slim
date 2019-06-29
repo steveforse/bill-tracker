@@ -1,21 +1,27 @@
-p#notice = notice
+.card
+  .card-header
+    .h4 Payee Details
+  .card-body.read-only
+    .form-group.row
+      .col-sm-3.col-form-label = Payee.human_attribute_name('name')
+      .col-sm-9.form-control-plaintext = @payee.name
+    .form-group.row
+      .col-sm-3.col-form-label = Payee.human_attribute_name('nickname')
+      .col-sm-9.form-control-plaintext = @payee.nickname
+    .form-group.row
+      .col-sm-3.col-form-label = Payee.human_attribute_name('website')
+      .col-sm-9.form-control-plaintext = @payee.website
+    .form-group.row
+      .col-sm-3.col-form-label = Payee.human_attribute_name('phone_number')
+      .col-sm-9.form-control-plaintext = @payee.phone_number
+    .form-group.row
+      .col-sm-3.col-form-label = Payee.human_attribute_name('description')
+      .col-sm-9
+        pre.scrollable = @payee.description
+    .form-group.row
+      .col-sm-9.offset-sm-3
+        = button_primary 'Edit Details', edit_payee_path(@payee), 'edit'
+        = button_danger 'Delete Payee', @payee, 'trash',
+            data: { confirm: 'Are you sure you want to delete this record?' },
+            method: :delete
 
-p
-  strong Name:
-  = @payee.name
-p
-  strong Nickname
-  = @payee.nickname
-p
-  strong Website:
-  = @payee.website
-p
-  strong Phone number:
-  = @payee.phone_number
-p
-  strong Description:
-  = @payee.description
-
-=> link_to 'Edit', edit_payee_path(@payee)
-'|
-=< link_to 'Back', payees_path
