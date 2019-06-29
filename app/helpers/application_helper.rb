@@ -12,29 +12,45 @@ module ApplicationHelper
     end
   end
 
+  #########
+  # ICONS #
+  #########
+  # Add icon_names to stuff!
+  def icon(icon_name)
+    content_tag(:span, '', class: "fas fa-#{icon_name}")
+  end
+
   ###########
   # BUTTONS #
   ###########
-  def button_primary(text, url, icon=nil, html_options={})
-    button_link_to(text, url, icon, 'primary', html_options)
+  def button_cancel(url, button_text='Cancel')
+    link_to(button_text, url, class: 'btn btn-outline-secondary')
   end
 
-  def button_danger(text, url, icon=nil, html_options={})
-    button_link_to(text, url, icon, 'danger', html_options)
+  def button_reset(text='Reset Form')
+    button_tag(text, type: 'reset', class: 'btn btn-outline-secondary')
   end
 
-  def button_success(text, url, icon=nil, html_options={})
-    button_link_to(text, url, icon, 'success', html_options)
+  def button_primary(text, url, icon_name=nil, html_options={})
+    button_link_to(text, url, icon_name, 'primary', html_options)
   end
 
-  def button_link_to(text, url, icon=nil, style='default', html_options={})
+  def button_danger(text, url, icon_name=nil, html_options={})
+    button_link_to(text, url, icon_name, 'danger', html_options)
+  end
+
+  def button_success(text, url, icon_name=nil, html_options={})
+    button_link_to(text, url, icon_name, 'success', html_options)
+  end
+
+  def button_link_to(text, url, icon_name=nil, style='default', html_options={})
     raise unless ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'default'].include? style
 
     html_options[:class] ||= ''
     html_options[:class] += " btn btn-#{style}"
     link_to url, html_options do
-      if icon
-        content_tag(:i, '', class: ('fas fa-' + icon)) + ' ' + text
+      if icon_name
+        icon(icon_name) + ' ' + text
       else
         text
       end
