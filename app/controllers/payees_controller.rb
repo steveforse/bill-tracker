@@ -18,6 +18,7 @@ class PayeesController < ApplicationController
 
   def show
     @payee = @payee.decorate
+    @schedules = @payee.schedules.decorate
   end
 
   # POST /payees
@@ -27,7 +28,7 @@ class PayeesController < ApplicationController
 
     respond_to do |format|
       if @payee.save
-        format.html { redirect_to payees_url, notice: 'Payee was successfully created.' }
+        format.html { redirect_to @payee, notice: 'Payee was successfully created.' }
         format.json { render :show, status: :created, location: @payee }
       else
         format.html { render :new }
