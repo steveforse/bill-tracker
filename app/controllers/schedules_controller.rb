@@ -3,18 +3,7 @@ class SchedulesController < ApplicationController
   before_action :set_schedule, only: [:show, :edit, :update, :destroy]
   before_action :convert_to_sql_dates, only: [:update, :create]
 
-  # GET /schedules
-  # GET /schedules.json
-  def index
-    @schedules = @payee.schedules.all.decorate
-  end
-
-  # GET /schedules/1
-  # GET /schedules/1.json
-  def show
-  end
-
-  # GET /schedules/new
+  # GET /payees/1/schedules/new
   def new
     @schedule = Schedule.new
     @schedule.payee = @payee
@@ -34,7 +23,7 @@ class SchedulesController < ApplicationController
 
     respond_to do |format|
       if @schedule.save
-        format.html { redirect_to payee_schedules_path, notice: 'Schedule was successfully created.' }
+        format.html { redirect_to @payee, notice: 'Schedule was successfully created.' }
         format.json { render :show, status: :created, location: @schedule }
       else
         format.html { render :new }
@@ -48,7 +37,7 @@ class SchedulesController < ApplicationController
   def update
     respond_to do |format|
       if @schedule.update(schedule_params)
-        format.html { redirect_to payee_schedules_path(@schedule.payee), notice: 'Schedule was successfully updated.' }
+        format.html { redirect_to @schedule.payee, notice: 'Schedule was successfully updated.' }
         format.json { render :show, status: :ok, location: @schedule }
       else
         format.html { render :edit }
@@ -63,7 +52,7 @@ class SchedulesController < ApplicationController
     payee = @schedule.payee
     @schedule.destroy
     respond_to do |format|
-      format.html { redirect_to payee_schedules_path(payee), notice: 'Schedule was successfully destroyed.' }
+      format.html { redirect_to payee, notice: 'Schedule was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -92,7 +81,6 @@ class SchedulesController < ApplicationController
         :payee_id,
         :start_date,
         :end_date,
-        :due_date,
         :frequency,
         :autopay,
         :minimum_payment
