@@ -55,6 +55,9 @@ group :development, :test do
 
   # Finds those nasty N+1 inefficiencies
   gem 'bullet'
+
+  # BDD testing
+  gem 'rspec-rails'
 end
 
 group :development do
