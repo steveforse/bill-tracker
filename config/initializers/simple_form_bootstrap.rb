@@ -10,7 +10,7 @@
 # components.
 # See https://github.com/plataformatec/simple_form#custom-components
 # to know more about custom components.
-# Dir[Rails.root.join('lib/components/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join('lib/components/**/*.rb')].each { |f| require f }
 
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
@@ -170,6 +170,43 @@ SimpleForm.setup do |config|
         bb.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
         bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
       end
+    end
+  end
+
+  # Input Group - custom component
+  # see example app and config at https://github.com/rafaelfranca/simple_form-bootstrap
+  config.wrappers :horizontal_input_group, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :minlength
+    b.optional :pattern
+    b.optional :min_max
+    b.optional :readonly
+    b.wrapper tag: 'label', class: 'col-sm-3 col-form-label' do |ba|
+      ba.use :label_text
+    end
+    b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |wr|
+      wr.wrapper :input_group_tag, tag: 'div', class: 'input-group' do |ba|
+        ba.optional :prepend
+        ba.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
+        ba.optional :append
+        ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+        ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+      end
+    end
+  end
+
+  config.wrappers :horizontal_toggle, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.wrapper tag: 'label', class: 'col-sm-3 col-form-label' do |ba|
+      ba.use :label_text
+    end
+    b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
+      ba.use :input, data: { width: '120px', on: 'Enabled', off: 'Disabled', offstyle: 'secondary', toggle: 'toggle' }, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted'  }
     end
   end
 
@@ -359,28 +396,6 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
 
-
-  # Input Group - custom component
-  # see example app and config at https://github.com/rafaelfranca/simple_form-bootstrap
-  # config.wrappers :input_group, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
-  #   b.use :html5
-  #   b.use :placeholder
-  #   b.optional :maxlength
-  #   b.optional :minlength
-  #   b.optional :pattern
-  #   b.optional :min_max
-  #   b.optional :readonly
-  #   b.use :label, class: 'form-control-label'
-  #   b.wrapper :input_group_tag, tag: 'div', class: 'input-group' do |ba|
-  #     ba.optional :prepend
-  #     ba.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
-  #     ba.optional :append
-  #   end
-  #   b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-  #   b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
-  # end
-
-
   # Floating Labels form
   #
   # floating labels default_wrapper
@@ -410,19 +425,19 @@ SimpleForm.setup do |config|
 
 
   # The default wrapper to be used by the FormBuilder.
-  config.default_wrapper = :vertical_form
+  config.default_wrapper = :horizontal_form
 
   # Custom wrappers for input types. This should be a hash containing an input
   # type as key and the wrapper that will be used for all inputs with specified type.
   config.wrapper_mappings = {
-    boolean:       :vertical_boolean,
-    check_boxes:   :vertical_collection,
-    date:          :vertical_multi_select,
-    datetime:      :vertical_multi_select,
-    file:          :vertical_file,
+    boolean: :horizontal_toggle,
+    check_boxes: :horizontal_collection,
+    date: :horizontal_multi_select,
+    datetime: :horizontal_multi_select,
+    file: :vertical_file,
     radio_buttons: :vertical_collection,
-    range:         :vertical_range,
-    time:          :vertical_multi_select
+    range: :vertical_range,
+    time: :vertical_multi_select
   }
 
   # enable custom form wrappers
