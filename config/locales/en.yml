@@ -30,4 +30,14 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+      attributes:
+          payee:
+            phone_number: 'Phone Number'
+
+  time:
+    formats:
+      default: '%m/%d/%Y %H:%M'
+  date:
+    formats:
+      default: '%m/%d/%Y'
