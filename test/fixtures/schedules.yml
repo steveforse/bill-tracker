@@ -1,19 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  payee_id: 1
-  start_date: 2019-06-19
-  end_date: 2019-06-19
-  due_date: 1
-  frequency: MyString
+  payee: mercedes
+  start_date: 2020-06-19
+  end_date: 2025-06-19
+  frequency: monthly
   autopay: false
-  minimum_payment: 9.99
+  minimum_payment: 1000
 
 two:
-  payee_id: 1
-  start_date: 2019-06-19
-  end_date: 2019-06-19
-  due_date: 1
-  frequency: MyString
+  payee: ditech
+  start_date: 2020-06-19
+  end_date: 2050-06-19
+  frequency: monthly
   autopay: false
-  minimum_payment: 9.99
+  minimum_payment: 4000

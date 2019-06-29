@@ -3,29 +3,26 @@ require 'test_helper'
 class SchedulesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @schedule = schedules(:one)
-  end
-
-  test "should get index" do
-    get schedules_url
-    assert_response :success
+    @payee = @schedule.payee
   end
 
   test "should get new" do
-    get new_schedule_url
+    get new_payee_schedule_url(@payee)
     assert_response :success
   end
 
   test "should create schedule" do
     assert_difference('Schedule.count') do
-      post schedules_url, params: { schedule: { autopay: @schedule.autopay, due_date: @schedule.due_date, end_date: @schedule.end_date, frequency: @schedule.frequency, minimum_payment: @schedule.minimum_payment, payee_id: @schedule.payee_id, start_date: @schedule.start_date } }
+      post payee_schedules_url(@payee), params: { schedule: {
+        start_date: '06/27/2007',
+        end_date: '09/27/2020',
+        frequency: 'weekly',
+        minimum_payment: 45.23,
+        autopay: true
+      } }
     end
 
-    assert_redirected_to schedule_url(Schedule.last)
-  end
-
-  test "should show schedule" do
-    get schedule_url(@schedule)
-    assert_response :success
+    assert_redirected_to payee_url(@payee)
   end
 
   test "should get edit" do
@@ -34,8 +31,14 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update schedule" do
-    patch schedule_url(@schedule), params: { schedule: { autopay: @schedule.autopay, due_date: @schedule.due_date, end_date: @schedule.end_date, frequency: @schedule.frequency, minimum_payment: @schedule.minimum_payment, payee_id: @schedule.payee_id, start_date: @schedule.start_date } }
-    assert_redirected_to schedule_url(@schedule)
+    patch schedule_url(@schedule), params: { schedule: {
+      start_date: @schedule.start_date,
+      end_date: @schedule.end_date,
+      frequency: @schedule.frequency,
+      minimum_payment: @schedule.minimum_payment,
+      autopay: @schedule.autopay
+    } }
+    assert_redirected_to payee_url(@payee)
   end
 
   test "should destroy schedule" do
@@ -43,6 +46,6 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
       delete schedule_url(@schedule)
     end
 
-    assert_redirected_to schedules_url
+    assert_redirected_to payee_url(@payee)
   end
 end

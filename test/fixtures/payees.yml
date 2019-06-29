@@ -1,15 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  alternative_name: MyString
-  website: MyString
-  phone_number: MyString
-  description: MyText
+mercedes:
+  name: Mercedes Benz Financial Services
+  nickname: Cary Payment
+  website: https://www.mbfs.com
+  phone_number: 800.873.5471
+  description: "M-F: 9am-8pm Eastern"
 
-two:
-  name: MyString
-  alternative_name: MyString
-  website: MyString
-  phone_number: MyString
-  description: MyText
+ditech:
+  name: Ditech
+  nickname: House Payment
+  website: https://myaccount.ditech.com
+  phone_number: 800-700-9212
+  description: "M-F: 8am-9pm Eastern, Saturday: 8am-5pm"

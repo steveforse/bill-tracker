@@ -78,7 +78,6 @@ class SchedulesController < ApplicationController
 
     def schedule_params
       params.require(:schedule).permit(
-        :payee_id,
         :start_date,
         :end_date,
         :frequency,
