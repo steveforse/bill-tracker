@@ -8,18 +8,23 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
-
-// Uncomment to copy all static images under ../images to the output folder and reference
-// them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
-// or the `imagePath` JavaScript helper below.
-//
-// const images = require.context('../images', true)
-// const imagePath = (name) => images(name, true)
-//import 'bootstrap'
-
-//const dataConfirmModal = import('data-confirm-modal')
-//dataConfirmModal
-
-
+// Load bootstrap javascript and css (with our overrides)
+import 'bootstrap'
 import '../stylesheets/bootstrap.scss'
+
+// Bootstrap4 datepicker
+import 'tempusdominus-bootstrap-4'
+import 'tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.css'
+
+// Replaces standard checkboxes with something a little easier to read
+import 'bootstrap4-toggle'
+import 'bootstrap4-toggle/css/bootstrap4-toggle.css'
+
+// Import our application css
 import '../stylesheets/application.scss'
+
+// Run this on every page load
+$(document).on('turbolinks:load', () => {
+  $('.simple_form .datepicker-group').datetimepicker({ format: 'L' })
+  $('.simple_form input[type="checkbox"]').bootstrapToggle()
+})
