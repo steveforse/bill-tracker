@@ -20,5 +20,5 @@
       .col-sm-9.offset-sm-3
         = f.button :submit, class: 'btn-primary'
         = button_reset
-        = button_cancel payee_schedules_path(@schedule.payee)
+        = button_cancel @schedule.payee, 'Back to Payee'
 
