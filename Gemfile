@@ -99,4 +99,7 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+
+  # Test helpers for more complex behavior
+  gem 'shoulda-matchers'
 end
