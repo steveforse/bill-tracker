@@ -53,6 +53,9 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
+  # Prettier than pretty print
+  gem 'awesome_print'
+
   # Finds those nasty N+1 inefficiencies
   gem 'bullet'
 
@@ -66,6 +69,9 @@ group :development, :test do
   # Factory bot
   gem 'factory_bot'
   gem 'factory_bot_rails'
+
+  # Create some fake data for our factories
+  gem 'faker'
 end
 
 group :development do
