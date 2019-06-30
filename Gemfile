@@ -62,6 +62,10 @@ group :development, :test do
   gem 'rspec-mocks', git: 'https://github.com/rspec/rspec-mocks'
   gem 'rspec-support', git: 'https://github.com/rspec/rspec-support'
   gem 'rspec-expectations', git: 'https://github.com/rspec/rspec-expectations'
+
+  # Factory bot
+  gem 'factory_bot'
+  gem 'factory_bot_rails'
 end
 
 group :development do
