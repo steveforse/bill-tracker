@@ -4,9 +4,6 @@ require 'rails_helper'
 
 # rubocop: disable Metrics/BlockLength
 RSpec.describe PayeesController, type: :controller do
-  # This should return the minimal set of attributes required to create a valid
-  # Payee. As you add validations to Payee, be sure to
-  # adjust the attributes here as well.
   let(:valid_attributes) do
     attributes_for(:payee)
   end
@@ -17,14 +14,14 @@ RSpec.describe PayeesController, type: :controller do
     attributes
   end
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # PayeesController. Be sure to keep this updated too.
+  let(:payee) do
+    create(:payee)
+  end
+
   let(:valid_session) { {} }
 
   describe 'GET #index' do
     it 'returns a success response' do
-      Payee.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(response).to be_successful
     end
@@ -32,7 +29,6 @@ RSpec.describe PayeesController, type: :controller do
 
   describe 'GET #show' do
     it 'returns a success response' do
-      payee = Payee.create! valid_attributes
       get :show, params: { id: payee.to_param }, session: valid_session
       expect(response).to be_successful
     end
@@ -47,7 +43,6 @@ RSpec.describe PayeesController, type: :controller do
 
   describe 'GET #edit' do
     it 'returns a success response' do
-      payee = Payee.create! valid_attributes
       get :edit, params: { id: payee.to_param }, session: valid_session
       expect(response).to be_successful
     end
@@ -82,14 +77,14 @@ RSpec.describe PayeesController, type: :controller do
       end
 
       it 'updates the requested payee' do
-        payee = Payee.create! valid_attributes
         put :update, params: { id: payee.to_param, payee: new_attributes }, session: valid_session
         payee.reload
-        expect(payee).to be_valid
+        expect(payee.attributes.except('id', 'created_at', 'updated_at')).to eq(
+          new_attributes.stringify_keys
+        )
       end
 
       it 'redirects to the payee' do
-        payee = Payee.create! valid_attributes
         put :update, params: { id: payee.to_param, payee: valid_attributes }, session: valid_session
         expect(response).to redirect_to(payee)
       end
@@ -97,7 +92,6 @@ RSpec.describe PayeesController, type: :controller do
 
     context 'with invalid params' do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        payee = Payee.create! valid_attributes
         put :update, params: { id: payee.to_param, payee: invalid_attributes },
                      session: valid_session
         expect(response).to be_successful
@@ -107,14 +101,13 @@ RSpec.describe PayeesController, type: :controller do
 
   describe 'DELETE #destroy' do
     it 'destroys the requested payee' do
-      payee = Payee.create! valid_attributes
+      payee
       expect do
         delete :destroy, params: { id: payee.to_param }, session: valid_session
       end.to change(Payee, :count).by(-1)
     end
 
     it 'redirects to the payees list' do
-      payee = Payee.create! valid_attributes
       delete :destroy, params: { id: payee.to_param }, session: valid_session
       expect(response).to redirect_to(payees_url)
     end

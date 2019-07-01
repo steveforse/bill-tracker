@@ -23,22 +23,23 @@ RSpec.describe SchedulesController, type: :controller do
     create(:payee)
   end
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # SchedulesController. Be sure to keep this updated too.
+  let(:schedule) do
+    create(:schedule)
+  end
+
   let(:valid_session) { {} }
 
   describe 'GET #new' do
     it 'returns a success response' do
-      get :new, params: { payee_id: payee.id }, session: valid_session
+      get :new, params: { payee_id: schedule.payee.to_param }, session: valid_session
       expect(response).to be_successful
     end
   end
 
   describe 'GET #edit' do
     it 'returns a success response' do
-      schedule = Schedule.create! valid_attributes
-      get :edit, params: { payee_id: payee.id, id: schedule.to_param }, session: valid_session
+      get :edit, params: { payee_id: schedule.payee.to_param, id: schedule.to_param },
+                 session: valid_session
       expect(response).to be_successful
     end
   end
@@ -47,21 +48,21 @@ RSpec.describe SchedulesController, type: :controller do
     context 'with valid params' do
       it 'creates a new Schedule' do
         expect do
-          post :create, params: { payee_id: payee.id, schedule: valid_attributes },
+          post :create, params: { payee_id: payee.to_param, schedule: valid_attributes },
                         session: valid_session
         end.to change(Schedule, :count).by(1)
       end
 
       it 'redirects to the created schedule' do
-        post :create, params: { payee_id: payee.id, schedule: valid_attributes },
+        post :create, params: { payee_id: schedule.payee.to_param, schedule: valid_attributes },
                       session: valid_session
-        expect(response).to redirect_to(payee)
+        expect(response).to redirect_to(schedule.payee)
       end
     end
 
     context 'with invalid params' do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: { payee_id: payee.id, schedule: invalid_attributes },
+        post :create, params: { payee_id: schedule.payee.id, schedule: invalid_attributes },
                       session: valid_session
         expect(response).to be_successful
       end
@@ -74,25 +75,24 @@ RSpec.describe SchedulesController, type: :controller do
         attributes_for(:schedule)
       end
 
+      let(:min_pay) { 'minimum_payment' }
+
       it 'updates the requested schedule' do
-        schedule = Schedule.create! valid_attributes
-        put :update, params: { id: schedule.to_param, schedule: new_attributes },
-                     session: valid_session
-        schedule.reload
-        expect(schedule).to be_valid
+        put :update, params: { id: schedule.id, schedule: new_attributes }, session: valid_session
+        expect(schedule.reload.attributes.except(
+                 'id', 'payee_id', 'created_at', 'updated_at'
+               )).to eq(new_attributes.stringify_keys.tap { |a| a[min_pay] = a[min_pay].to_f })
       end
 
       it 'redirects to the schedule' do
-        schedule = Schedule.create! valid_attributes
         put :update, params: { id: schedule.to_param, schedule: valid_attributes },
                      session: valid_session
-        expect(response).to redirect_to(payee)
+        expect(response).to redirect_to(schedule.payee)
       end
     end
 
     context 'with invalid params' do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        schedule = Schedule.create! valid_attributes
         put :update, params: { id: schedule.to_param, schedule: invalid_attributes },
                      session: valid_session
         expect(response).to be_successful
@@ -102,16 +102,15 @@ RSpec.describe SchedulesController, type: :controller do
 
   describe 'DELETE #destroy' do
     it 'destroys the requested schedule' do
-      schedule = Schedule.create! valid_attributes
+      schedule
       expect do
         delete :destroy, params: { id: schedule.to_param }, session: valid_session
       end.to change(Schedule, :count).by(-1)
     end
 
     it 'redirects to the schedules list' do
-      schedule = Schedule.create! valid_attributes
       delete :destroy, params: { id: schedule.to_param }, session: valid_session
-      expect(response).to redirect_to(payee)
+      expect(response).to redirect_to(schedule.payee)
     end
   end
 end
