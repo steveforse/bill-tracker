@@ -1,1 +1,3 @@
-json.partial! "schedules/schedule", schedule: @schedule
+# frozen_string_literal: true
+
+json.partial! 'schedules/schedule', schedule: @schedule

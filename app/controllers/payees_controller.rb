@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Controller for creating, modifying, and deleting payees
 class PayeesController < ApplicationController
-  before_action :set_payee, only: [:show, :edit, :update, :destroy]
+  before_action :set_payee, only: %i[show edit update destroy]
 
   # GET /payees
   # GET /payees.json
@@ -13,8 +16,7 @@ class PayeesController < ApplicationController
   end
 
   # GET /payees/1/edit
-  def edit
-  end
+  def edit; end
 
   def show
     @payee = @payee.decorate
@@ -62,13 +64,14 @@ class PayeesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_payee
-      @payee = Payee.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def payee_params
-      params.require(:payee).permit(:name, :nickname, :website, :phone_number, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_payee
+    @payee = Payee.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def payee_params
+    params.require(:payee).permit(:name, :nickname, :website, :phone_number, :description)
+  end
 end

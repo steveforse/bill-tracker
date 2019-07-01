@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Creates the payees table
 class CreatePayees < ActiveRecord::Migration[6.0]
   def change
     create_table :payees do |t|

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Decorator for when schedules are rendered in views
 class ScheduleDecorator < Draper::Decorator
   delegate_all
 

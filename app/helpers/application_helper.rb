@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Defines top-level, app-wide helpers
 module ApplicationHelper
   #########
@@ -5,10 +7,10 @@ module ApplicationHelper
   #########
   def flash_class(level)
     case level
-      when 'notice' then 'alert alert-info'
-      when 'success' then 'alert alert-success'
-      when 'error' then 'alert alert-danger'
-      when 'alert' then 'alert alert-warning'
+    when 'notice' then 'alert alert-info'
+    when 'success' then 'alert alert-success'
+    when 'error' then 'alert alert-danger'
+    when 'alert' then 'alert alert-warning'
     end
   end
 
@@ -23,28 +25,28 @@ module ApplicationHelper
   ###########
   # BUTTONS #
   ###########
-  def button_cancel(url, button_text='Cancel')
+  def button_cancel(url, button_text = 'Cancel')
     link_to(button_text, url, class: 'btn btn-outline-secondary')
   end
 
-  def button_reset(text='Reset Form')
+  def button_reset(text = 'Reset Form')
     button_tag(text, type: 'reset', class: 'btn btn-outline-secondary')
   end
 
-  def button_primary(text, url, icon_name=nil, html_options={})
+  def button_primary(text, url, icon_name = nil, html_options = {})
     button_link_to(text, url, icon_name, 'primary', html_options)
   end
 
-  def button_danger(text, url, icon_name=nil, html_options={})
+  def button_danger(text, url, icon_name = nil, html_options = {})
     button_link_to(text, url, icon_name, 'danger', html_options)
   end
 
-  def button_success(text, url, icon_name=nil, html_options={})
+  def button_success(text, url, icon_name = nil, html_options = {})
     button_link_to(text, url, icon_name, 'success', html_options)
   end
 
-  def button_link_to(text, url, icon_name=nil, style='default', html_options={})
-    raise unless ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'default'].include? style
+  def button_link_to(text, url, icon_name = nil, style = 'default', html_options = {})
+    raise unless %w[primary secondary success danger warning info default].include? style
 
     html_options[:class] ||= ''
     html_options[:class] += " btn btn-#{style}"
@@ -56,5 +58,4 @@ module ApplicationHelper
       end
     end
   end
-
 end

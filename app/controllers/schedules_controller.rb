@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
+# Conroller for creating/editing schedules
 class SchedulesController < ApplicationController
-  before_action :set_payee, only: [:index, :new, :create]
-  before_action :set_schedule, only: [:show, :edit, :update, :destroy]
-  before_action :convert_to_sql_dates, only: [:update, :create]
+  before_action :set_payee, only: %i[new create]
+  before_action :set_schedule, only: %i[edit update destroy]
+  before_action :convert_to_sql_dates, only: %i[update create]
 
   # GET /payees/1/schedules/new
   def new
@@ -58,31 +61,30 @@ class SchedulesController < ApplicationController
   end
 
   private
-    def set_payee
-      @payee = Payee.find(params[:payee_id])
-    end
 
-    def set_schedule
-      @schedule = Schedule.find(params[:id])
-    end
+  def set_payee
+    @payee = Payee.find(params[:payee_id])
+  end
 
-    def convert_to_sql_dates
-      if params[:schedule][:start_date].present?
-        params[:schedule][:start_date] = Date.strptime(params[:schedule][:start_date], '%m/%d/%Y')
-      end
+  def set_schedule
+    @schedule = Schedule.find(params[:id])
+  end
 
-      if params[:schedule][:end_date].present?
-        params[:schedule][:end_date] = Date.strptime(params[:schedule][:end_date], '%m/%d/%Y')
-      end
-    end
+  def convert_to_sql_dates
+    start_date = params[:schedule][:start_date]
+    params[:schedule][:start_date] = Date.strptime(start_date, '%m/%d/%Y') if start_date.present?
 
-    def schedule_params
-      params.require(:schedule).permit(
-        :start_date,
-        :end_date,
-        :frequency,
-        :autopay,
-        :minimum_payment
-      )
-    end
+    end_date = params[:schedule][:end_date]
+    params[:schedule][:end_date] = Date.strptime(end_date, '%m/%d/%Y') if end_date.present?
+  end
+
+  def schedule_params
+    params.require(:schedule).permit(
+      :start_date,
+      :end_date,
+      :frequency,
+      :autopay,
+      :minimum_payment
+    )
+  end
 end

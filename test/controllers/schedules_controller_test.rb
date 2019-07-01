@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class SchedulesControllerTest < ActionDispatch::IntegrationTest
@@ -6,12 +8,12 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     @payee = @schedule.payee
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_payee_schedule_url(@payee)
     assert_response :success
   end
 
-  test "should create schedule" do
+  test 'should create schedule' do
     assert_difference('Schedule.count') do
       post payee_schedules_url(@payee), params: { schedule: {
         start_date: '06/27/2007',
@@ -25,12 +27,12 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to payee_url(@payee)
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_schedule_url(@schedule)
     assert_response :success
   end
 
-  test "should update schedule" do
+  test 'should update schedule' do
     patch schedule_url(@schedule), params: { schedule: {
       start_date: @schedule.start_date,
       end_date: @schedule.end_date,
@@ -41,7 +43,7 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to payee_url(@payee)
   end
 
-  test "should destroy schedule" do
+  test 'should destroy schedule' do
     assert_difference('Schedule.count', -1) do
       delete schedule_url(@schedule)
     end

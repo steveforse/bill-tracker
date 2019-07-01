@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
+# rubocop: disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.hosts << "forse.co"
+  config.hosts << 'forse.co'
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -18,7 +21,6 @@ Rails.application.configure do
 
   # Allow a specific IP address for Web Console - DANGEROUS
   config.web_console.permissions = ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
-
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
@@ -68,10 +70,11 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-	config.after_initialize do
-  	Bullet.enable = true
-  	Bullet.bullet_logger = false
-  	Bullet.console = true
-  	Bullet.rails_logger = true
-	end
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = false
+    Bullet.console = true
+    Bullet.rails_logger = true
+  end
 end
+# rubocop: enable Metrics/BlockLength
