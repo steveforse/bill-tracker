@@ -1,0 +1,17 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.6
+  Exclude:
+      - 'bin/**/*'
+      - 'node_modules/**/*'
+      - 'test/**/*'
+
+Metrics/LineLength:
+  Max: 100
+
+Metrics/MethodLength:
+  Max: 15
