@@ -2,16 +2,29 @@
 
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the SchedulesHelper. For example:
-#
-# describe SchedulesHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe SchedulesHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'grouped_frequencies' do
+    it { expect(helper.grouped_frequencies.count).to eq(3) }
+
+    describe 'Weekly' do
+      let(:test_case) { helper.grouped_frequencies[0] }
+
+      it { expect(test_case[0]).to eq('Weekly') }
+      it { expect(test_case[1].count).to eq(3) }
+    end
+
+    describe 'Monthly' do
+      let(:test_case) { helper.grouped_frequencies[1] }
+
+      it { expect(test_case[0]).to eq('Monthly') }
+      it { expect(test_case[1].count).to eq(4) }
+    end
+
+    describe 'Annually' do
+      let(:test_case) { helper.grouped_frequencies[2] }
+
+      it { expect(test_case[0]).to eq('Annually') }
+      it { expect(test_case[1].count).to eq(2) }
+    end
+  end
 end
