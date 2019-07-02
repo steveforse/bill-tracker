@@ -33,20 +33,19 @@ module ApplicationHelper
     button_tag(text, type: 'reset', class: 'btn btn-outline-secondary')
   end
 
-  def button_primary(text, url, icon_name = nil, html_options = {})
-    button_link_to(text, url, icon_name, 'primary', html_options)
-  end
+  %w[primary secondary success danger warning info default].each do |button_type|
+    define_method("button_#{button_type}") do |text, url, icon_name, html_options|
+      icon_name ||= nil
+      html_options ||= {}
 
-  def button_danger(text, url, icon_name = nil, html_options = {})
-    button_link_to(text, url, icon_name, 'danger', html_options)
-  end
-
-  def button_success(text, url, icon_name = nil, html_options = {})
-    button_link_to(text, url, icon_name, 'success', html_options)
+      button_link_to(text, url, icon_name, button_type, html_options)
+    end
   end
 
   def button_link_to(text, url, icon_name = nil, style = 'default', html_options = {})
-    raise unless %w[primary secondary success danger warning info default].include? style
+    unless %w[primary secondary success danger warning info default].include? style
+      raise ArgumentError, "Style must be one of Bootstrap's contextual classes"
+    end
 
     html_options[:class] ||= ''
     html_options[:class] += " btn btn-#{style}"
