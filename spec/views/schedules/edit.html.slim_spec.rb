@@ -8,6 +8,8 @@ RSpec.describe 'schedules/edit', type: :view do
   end
 
   it 'renders the edit schedule form' do
+    assign(:schedule, schedule)
+
     render
 
     assert_select 'form[action=?][method=?]', schedule_path(schedule), 'post' do

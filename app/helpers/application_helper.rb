@@ -34,9 +34,9 @@ module ApplicationHelper
   end
 
   %w[primary secondary success danger warning info default].each do |button_type|
-    define_method("button_#{button_type}") do |text, url, icon_name, html_options|
-      icon_name ||= nil
-      html_options ||= {}
+    define_method("button_#{button_type}") do |text, url, *args|
+      icon_name = args[0]
+      html_options = args[1] || {}
 
       button_link_to(text, url, icon_name, button_type, html_options)
     end
