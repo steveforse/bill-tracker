@@ -10,11 +10,11 @@
         table.table.table-striped.table-bordered.table-hover
           thead.thead-light
             tr
-              th Start date
-              th End date
-              th Frequency
-              th Autopay
-              th Minimum payment
+              th = sortable 'Start Date', :start_date
+              th = sortable 'End Date', :end_date
+              th = sortable 'Frequency', :frequency
+              th = sortable 'Autopay', :autopay
+              th = sortable 'Minimum Payment', :minimum_payment
               th Actions
           tbody
             - @schedules.each do |schedule|

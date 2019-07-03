@@ -9,10 +9,10 @@
         table.table.table-striped.table-bordered.table-hover
           thead.thead-light
             tr
-              th Name
-              th Nickname
-              th Website
-              th Phone number
+              th = sortable 'Name', :name
+              th = sortable 'Nickname', :nickname
+              th = sortable 'Website', :website
+              th = sortable 'Phone Number', :phone_number
               th Actions
           tbody
             - @payees.each do |payee|
