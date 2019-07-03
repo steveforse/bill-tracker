@@ -14,7 +14,7 @@ RSpec.describe Schedule, type: :model do
     it { is_expected.to validate_presence_of(:start_date) }
     it { is_expected.to validate_date_of(:start_date) }
     it { is_expected.to allow_value('2020-12-28').for(:start_date) }
-    it { is_expected.to_not allow_value('2020-12-29').for(:start_date) }
+    it { is_expected.not_to allow_value('2020-12-29').for(:start_date) }
 
     # End date
     it { is_expected.to validate_date_of(:end_date).after(:start_date).allow_blank }
@@ -32,6 +32,6 @@ RSpec.describe Schedule, type: :model do
 
     # Association exists
     it { is_expected.to allow_value(create(:payee).id).for(:payee_id) }
-    it { is_expected.to_not allow_value(9999).for(:payee_id) }
+    it { is_expected.not_to allow_value(9999).for(:payee_id) }
   end
 end
