@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'payees/edit', type: :view do
   let(:payee) { create(:payee) }
+
   it 'renders the edit payee form' do
     assign(:payee, payee)
 
