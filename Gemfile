@@ -35,6 +35,7 @@ gem 'slim-rails'
 # HELPERS #
 ###########
 gem 'simple_form'
+gem 'rezort', git: 'https://github.com/steveforse/rezort'
 
 ##########
 # SERVER #

@@ -41,6 +41,13 @@ GIT
   specs:
     rspec-support (3.9.0.pre)
 
+GIT
+  remote: https://github.com/steveforse/rezort
+  revision: f0237aeb8c62f7b03676013717c29ab26bb874c9
+  specs:
+    rezort (1.0.0)
+      rails (>= 3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -367,6 +374,7 @@ DEPENDENCIES
   meta_request
   puma (~> 3.11)
   rails (~> 6.0.0.rc1)
+  rezort!
   rspec-core!
   rspec-expectations!
   rspec-mocks!
