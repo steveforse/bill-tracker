@@ -7,5 +7,11 @@ FactoryBot.define do
     website { Faker::Internet.url }
     phone_number { Faker::PhoneNumber.phone_number }
     description { Faker::Quote.famous_last_words }
+
+    trait :with_schedules do
+      after(:create) do |instance|
+        create_list :schedule, 2, payee: instance
+      end
+    end
   end
 end
