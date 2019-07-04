@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-
-# rubocop: disable RSpec/ExampleLength
 RSpec.describe 'payees/edit', type: :view do
   let(:payee) { create(:payee) }
 
@@ -31,4 +29,3 @@ RSpec.describe 'payees/edit', type: :view do
     end
   end
 end
-# rubocop: enable RSpec/ExampleLength

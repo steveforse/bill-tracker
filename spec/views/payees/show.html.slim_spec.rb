@@ -14,6 +14,7 @@ RSpec.describe 'payees/show', type: :view do
 
     render
   end
+
   let(:payee) { Payee.first }
   let(:schedules) { payee.schedules.rezort(params[:sort], 'start_date ASC') }
 
@@ -46,7 +47,7 @@ RSpec.describe 'payees/show', type: :view do
     assert_select '.card-body .row:nth-of-type(6)' do
       assert_select "a.btn.btn-primary[href='/payees/#{payee.id}/edit']", text: 'Edit Details'
       assert_select "a.btn.btn-danger[href='/payees/#{payee.id}'][data-method=delete]",
-        text: 'Delete Payee'
+                    text: 'Delete Payee'
       assert_select "a.btn.btn-outline-secondary[href='/payees']", text: 'Back to Payees List'
     end
   end
@@ -73,7 +74,7 @@ RSpec.describe 'payees/show', type: :view do
   it 'renders schedules' do
     assert_select 'table.table' do
       payee.schedules.each_with_index do |schedule, i|
-        assert_select "tr:nth-of-type(#{i+1})" do
+        assert_select "tr:nth-of-type(#{i + 1})" do
           assert_select 'td:nth-of-type(1)', text: schedule.start_date.to_s
           assert_select 'td:nth-of-type(2)', text: schedule.end_date.to_s
           assert_select 'td:nth-of-type(3)', text: Schedule.frequencies[schedule.frequency]

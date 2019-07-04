@@ -31,7 +31,7 @@ RSpec.describe 'payees/new', type: :view do
 
       assert_select '.form-actions' do
         assert_select "input.btn.btn-primary[type='submit'][value='Create Payee']"
-        assert_select "button.btn.btn-outline-secondary[type=reset]", text: 'Reset Form'
+        assert_select 'button.btn.btn-outline-secondary[type=reset]', text: 'Reset Form'
         assert_select 'a.btn.btn-outline-secondary[href=\'/payees\']', text: 'Back to Payees List'
       end
     end

@@ -48,10 +48,10 @@ RSpec.describe 'payees/index', type: :view do
         assert_select 'td', text: payees[0].nickname, count: 1
         assert_select "td a[href='#{payees[0].website}']", text: payees[0].website, count: 1
         assert_select "td a[href='tel:#{payees[0].phone_number}']",
-          text: payees[0].phone_number, count: 1
+                      text: payees[0].phone_number, count: 1
         assert_select "td a.btn.btn-primary[href='/payees/#{payees[0].id}']", text: 'Details'
         assert_select "td a.btn.btn-danger[data-method=delete][href='/payees/#{payees[0].id}']",
-          text: 'Delete'
+                      text: 'Delete'
       end
 
       assert_select 'tr:last' do
@@ -60,10 +60,10 @@ RSpec.describe 'payees/index', type: :view do
         assert_select 'td', text: payees[1].nickname, count: 1
         assert_select "td a[href='#{payees[1].website}']", text: payees[1].website, count: 1
         assert_select "td a[href='tel:#{payees[1].phone_number}']",
-          text: payees[1].phone_number, count: 1
+                      text: payees[1].phone_number, count: 1
         assert_select "td a.btn.btn-primary[href='/payees/#{payees[1].id}']", text: 'Details'
         assert_select "td a.btn.btn-danger[data-method=delete][href='/payees/#{payees[1].id}']",
-          text: 'Delete'
+                      text: 'Delete'
       end
     end
   end
