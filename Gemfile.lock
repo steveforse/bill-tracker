@@ -43,7 +43,7 @@ GIT
 
 GIT
   remote: https://github.com/steveforse/rezort
-  revision: f0237aeb8c62f7b03676013717c29ab26bb874c9
+  revision: 67a6fc1d3fd21da95480bc3b0727193b1fecf8e9
   specs:
     rezort (1.0.0)
       rails (>= 3.0)
