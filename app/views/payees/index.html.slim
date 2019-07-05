@@ -24,7 +24,8 @@
                 td.text-nowrap
                   = button_primary 'Details', payee_path(payee), 'info-circle'
                   = button_danger 'Delete', payee, 'trash',
-                      data: { confirm: 'Are you sure you want to delete this record?' },
+                      data: { confirm: 'Deleting this payee will also delete all associated ' \
+                                       'schedules. Are you sure you want to delete this payee?' },
                       method: :delete
     - else
       .h5.text-center.p-3 Create a payee to get started
