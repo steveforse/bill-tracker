@@ -40,11 +40,11 @@ RSpec.describe 'Schedules', type: :system do
       end.not_to change(Schedule, :count)
 
       expect(page).to have_content("Start date can't be blank")
-      expect(page).to have_content("Frequency must be from dropdown list")
+      expect(page).to have_content('Frequency must be from dropdown list')
     end
 
     it 'returns to payee details when clicking "Back to Payee" button' do
-      click_link "Back to Payee"
+      click_link 'Back to Payee'
       expect(page).to have_current_path(payee_path(payee))
     end
 
@@ -103,7 +103,7 @@ RSpec.describe 'Schedules', type: :system do
     end
 
     it 'returns to payee details when clicking "Back to Payee" button' do
-      click_link "Back to Payee"
+      click_link 'Back to Payee'
       expect(page).to have_current_path(payee_path(payee))
     end
 
