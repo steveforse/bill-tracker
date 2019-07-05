@@ -4,7 +4,7 @@
 class SchedulesController < ApplicationController
   before_action :set_payee, only: %i[new create]
   before_action :set_schedule, only: %i[edit update destroy]
-  before_action :convert_to_sql_dates, only: %i[update create]
+  before_action only: %i[update create] do convert_to_sql_dates( [:start_date, :end_date]) end
 
   # GET /payees/1/schedules/new
   def new
@@ -68,14 +68,6 @@ class SchedulesController < ApplicationController
 
   def set_schedule
     @schedule = Schedule.find(params[:id])
-  end
-
-  def convert_to_sql_dates
-    start_date = params[:schedule][:start_date]
-    params[:schedule][:start_date] = Date.strptime(start_date, '%m/%d/%Y') if start_date.present?
-
-    end_date = params[:schedule][:end_date]
-    params[:schedule][:end_date] = Date.strptime(end_date, '%m/%d/%Y') if end_date.present?
   end
 
   def schedule_params
