@@ -19,7 +19,14 @@ Metrics/MethodLength:
 Metrics/BlockLength:
   Exclude:
     - 'spec/views/**/*'
+    - 'spec/system/**/*'
 
 RSpec/ExampleLength:
   Exclude:
     - 'spec/views/**/*'
+    - 'spec/system/**/*'
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - 'spec/system/**/*'
+
