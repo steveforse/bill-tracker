@@ -204,9 +204,8 @@ SimpleForm.setup do |config|
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.wrapper tag: 'label', class: 'col-sm-3 col-form-label' do |ba|
-      ba.use :label_text
-    end
+
+    b.use :label, class: 'col-sm-3 col-form-label'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |wr|
       wr.wrapper :input_group_tag, tag: 'div', class: 'input-group' do |ba|
         ba.optional :prepend
