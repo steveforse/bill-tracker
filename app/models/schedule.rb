@@ -6,6 +6,7 @@ class Schedule < ApplicationRecord
 
   # Relations
   belongs_to :payee
+  has_many :payments, dependent: :destroy
 
   # Validations
   validates :start_date, presence: true, date: true,

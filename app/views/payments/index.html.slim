@@ -1,0 +1,30 @@
+.card
+  .card-header
+    .d-flex
+      .h4.mr-auto Payments
+      = button_success 'New Payment', new_payment_path, 'plus'
+
+  .card-body.p-0
+    .table-responsive
+      table.table.table-striped.table-bordered.table-hover
+        thead.thead-light
+          tr
+            th Date
+            th Due date
+            th Amount
+            th Comment
+            th Actions
+        tbody
+          - @payments.each do |payment|
+            tr
+              td = payment.date
+              td = payment.due_date
+              td = payment.amount
+              td = payment.comment
+              td
+                = button_primary 'Edit', edit_payment_path(payment), 'edit'
+                = button_danger 'Delete', payment, 'trash',
+                    data: { confirm: 'Are you sure you want to delete this record?' },
+                    method: :delete
+
+
