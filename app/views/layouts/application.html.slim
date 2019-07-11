@@ -7,10 +7,12 @@ html
     = csp_meta_tag
     = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = stylesheet_pack_tag 'icons', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_pack_tag 'calendar', media: 'all', 'data-turbolinks-track': 'reload'
 
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'icons', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'modals', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'calendar', 'data-turbolinks-track': 'reload'
   body
     .container
       - flash.each do |key, value|
