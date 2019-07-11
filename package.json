@@ -3,8 +3,11 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.9.0",
+    "@fullcalendar/bootstrap": "^4.2.0",
     "@fullcalendar/core": "^4.2.0",
     "@fullcalendar/daygrid": "^4.2.0",
+    "@fullcalendar/list": "^4.2.0",
+    "@fullcalendar/rrule": "^4.2.0",
     "@rails/actioncable": "^6.0.0-alpha",
     "@rails/activestorage": "^6.0.0-alpha",
     "@rails/ujs": "^6.0.0-alpha",
@@ -15,7 +18,9 @@
     "expose-loader": "^0.7.5",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
+    "rrule": "^2.6.2",
     "tempusdominus-bootstrap-4": "^5.1.2",
+    "tippy.js": "^4.3.4",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
