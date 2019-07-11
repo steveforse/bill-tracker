@@ -7,5 +7,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'calendar', to: 'calendar#index'
+  get 'calendar/events', to: 'calendar#events'
+
   root 'payees#index'
 end
