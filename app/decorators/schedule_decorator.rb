@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Decorator for when schedules are rendered in views
-class ScheduleDecorator < Draper::Decorator
+class ScheduleDecorator < ApplicationDecorator
   delegate_all
 
   def autopay
@@ -13,6 +13,6 @@ class ScheduleDecorator < Draper::Decorator
   end
 
   def frequency
-    Schedule.frequencies[object.frequency]
+    Schedule.frequencies[object.frequency][:description]
   end
 end
