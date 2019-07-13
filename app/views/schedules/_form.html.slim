@@ -2,6 +2,7 @@
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
   .form-inputs
+    = f.input :name
     = f.input :start_date, as: :datepicker
     = f.input :end_date, as: :datepicker
     = f.input :frequency, as: :grouped_select,
