@@ -7,7 +7,10 @@ class PayeesController < ApplicationController
   # GET /payees
   # GET /payees.json
   def index
-    @payees = Payee.all.rezort(params[:sort], 'name ASC').decorate
+    @payees = Payee.all
+                   .rezort(params[:sort], 'name ASC')
+                   .page(params[:page])
+                   .decorate
   end
 
   # GET /payees/new
@@ -20,7 +23,10 @@ class PayeesController < ApplicationController
 
   def show
     @payee = @payee.decorate
-    @schedules = @payee.schedules.rezort(params[:sort], 'start_date ASC').decorate
+    @schedules = @payee.schedules
+                       .rezort(params[:sort], 'start_date ASC')
+                       .page(params[:page])
+                       .decorate
   end
 
   # POST /payees
