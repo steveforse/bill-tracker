@@ -4,9 +4,15 @@
 module SchedulesHelper
   def grouped_frequencies
     [
-      ['Weekly', Schedule.frequencies.select { |k| k.include? 'weekly' }.to_a],
-      ['Monthly', Schedule.frequencies.select { |k| k.include? 'monthly' }.to_a],
-      ['Annually', Schedule.frequencies.select { |k| k.include? 'annually' }.to_a]
+      ['Weekly', Schedule.frequencies
+                         .select { |k| k.include? 'weekly' }
+                         .map { |k, v| [k, v[:description]] }],
+      ['Monthly', Schedule.frequencies
+                          .select { |k| k.include? 'monthly' }
+                          .map { |k, v| [k, v[:description]] }],
+      ['Annually', Schedule.frequencies
+                           .select { |k| k.include? 'annually' }
+                           .map { |k, v| [k, v[:description]] }]
     ]
   end
 end
