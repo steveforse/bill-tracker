@@ -7,7 +7,7 @@
   .card-body.p-0
     - if @payments.any?
       .table-responsive
-        table.table.table-striped.table-bordered.table-hover
+        table.table.table-striped.table-bordered.table-hover.table-sm
           thead.thead-light
             tr
               th = sortable 'Date', :Date
