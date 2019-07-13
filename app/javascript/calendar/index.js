@@ -20,12 +20,16 @@ import 'tippy.js/themes/light-border.css'
 
 $(document).on('turbolinks:load', () => {
   let baseConfig = {
-    plugins: [ dayGridPlugin, bootstrapPlugin, rrulePlugin, listPlugin ],
     themeSystem: 'bootstrap',
     fixedWeekCount: false,
     height: 'auto',
-    defaultView: 'dayGridMonth',
+    showNonCurrentDates: false,
     eventSources: [ '/calendar/events.json' ],
+  }
+
+  let calendarConfig = {
+    plugins: [ dayGridPlugin, bootstrapPlugin, rrulePlugin ],
+    defaultView: 'dayGridMonth',
     customButtons: {
       next: {
         click: () => {
@@ -45,17 +49,47 @@ $(document).on('turbolinks:load', () => {
           calendar.today()
           list.today()
         }
-      },
+      }
     },
+    eventRender: (eventInfo) => {
+      let element = eventInfo.el
+      let props = eventInfo.event.extendedProps
+
+      element.classList.add('payment-late')
+
+      tippy(element, {
+        content: 'here it is'
+      })
+    }
   }
 
   let listConfig = {
+    plugins: [ bootstrapPlugin, rrulePlugin, listPlugin ],
     header: { left: '', center: '', right: ''  },
-    defaultView: 'listMonth'
-  }
-  listConfig = {...baseConfig,  ...listConfig}
+    defaultView: 'listMonth',
+    eventRender: (eventInfo) => {
+      let props = eventInfo.event.extendedProps
+      let number_to_currency = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      })
 
-  let calendarConfig = baseConfig
+      // DOM element
+      let element = eventInfo.el
+
+      // Create alternative title
+      let amount = number_to_currency.format(props.minimum_payment)
+      let name = props.payee.nickname || props.payee.name
+      let title = `${name} - ${amount}`
+
+      // Modify title text before rendering
+      $(element).find('.fc-list-item-title')
+                .after(`<td class="text-right minimum-amount">${amount}</td>`)
+    },
+  }
+
+  listConfig = {...baseConfig,  ...listConfig}
+  calendarConfig = {...baseConfig, ...calendarConfig}
 
   window.calendar = new Calendar($('.calendar-container')[0], calendarConfig)
   window.list = new Calendar($('.list-container')[0], listConfig)
