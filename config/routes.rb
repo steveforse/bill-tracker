@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   resources :payees do
-    resources :schedules, shallow: true, except: %i[show index] do
+    resources :schedules, shallow: true, except: %i[index] do
       resources :payments, shallow: true
     end
   end
@@ -10,5 +10,5 @@ Rails.application.routes.draw do
   get 'calendar', to: 'calendar#index'
   get 'calendar/events', to: 'calendar#events'
 
-  root 'payees#index'
+  root 'calendar#index'
 end
