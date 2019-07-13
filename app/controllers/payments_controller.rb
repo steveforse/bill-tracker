@@ -1,12 +1,13 @@
 class PaymentsController < ApplicationController
+  before_action :set_schedule, only: %i[new create]
   before_action :set_payment, only: [:show, :edit, :update, :destroy]
-  before_action :set_schedule, only: %i[edit update destroy new create]
   before_action only: %i[update create] do convert_to_sql_dates([:date, :due_date]) end
 
   # GET /payments
   # GET /payments.json
   def index
-    @payments = Payment.all
+    @schedule = Schedule.find(params[:schedule_id])
+    @payments = @schedule.payments
   end
 
   # GET /payments/1
@@ -17,6 +18,7 @@ class PaymentsController < ApplicationController
   # GET /payments/new
   def new
     @payment = Payment.new
+    @payment.schedule = @schedule
   end
 
   # GET /payments/1/edit
@@ -31,7 +33,7 @@ class PaymentsController < ApplicationController
 
     respond_to do |format|
       if @payment.save
-        format.html { redirect_to @payment, notice: 'Payment was successfully created.' }
+        format.html { redirect_to @payment.schedule, notice: 'Payment was successfully created.' }
         format.json { render :show, status: :created, location: @payment }
       else
         format.html { render :new }
@@ -45,7 +47,7 @@ class PaymentsController < ApplicationController
   def update
     respond_to do |format|
       if @payment.update(payment_params)
-        format.html { redirect_to @payment, notice: 'Payment was successfully updated.' }
+        format.html { redirect_to @payment.schedule, notice: 'Payment was successfully updated.' }
         format.json { render :show, status: :ok, location: @payment }
       else
         format.html { render :edit }
@@ -57,9 +59,10 @@ class PaymentsController < ApplicationController
   # DELETE /payments/1
   # DELETE /payments/1.json
   def destroy
+    schedule = @payment.schedule
     @payment.destroy
     respond_to do |format|
-      format.html { redirect_to payments_url, notice: 'Payment was successfully destroyed.' }
+      format.html { redirect_to schedule, notice: 'Payment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
