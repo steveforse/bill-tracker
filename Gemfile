@@ -36,6 +36,7 @@ gem 'slim-rails'
 ###########
 gem 'rezort', git: 'https://github.com/steveforse/rezort'
 gem 'simple_form'
+gem 'kaminari'
 
 ##########
 # SERVER #
@@ -47,10 +48,15 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 ##############
 # JAVASCRIPT #
-#############
+##############
 gem 'jbuilder', '~> 2.5'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'
+
+########
+# MISC #
+########
+gem 'rrule' # Recurrence rules following iCalendar RFC 5545
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -72,11 +78,13 @@ group :development, :test do
 
   # Create some fake data for our factories
   gem 'faker'
+
+  # Prefer over prettyprint
+  gem 'awesome_print'
 end
 
 group :development do
   # Improved error messages
-  gem 'awesome_print'
   gem 'better_errors'
   gem 'binding_of_caller'
 
