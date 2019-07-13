@@ -12,4 +12,6 @@
     .form-group.row.mb-0
       .col-sm-9.offset-sm-3
         = f.button :submit, class: 'btn-primary'
-        = f.button :button, 'Reset Form', type: 'reset', class: 'btn-outline-secondary'
+        = button_reset
+        = button_cancel @payment.schedule, 'Back to Schedule'
+
