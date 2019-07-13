@@ -1,17 +1,21 @@
 # frozen_string_literal: true
 
-  json.array! (1..4).to_a do |id|
-    json.title Faker::Company.industry
-    json.color '#ff9f89'
+  json.array! @schedules.each do |schedule|
+    payee = schedule.payee
+    json.title payee.nickname || payee.name
+    json.rrule schedule.rrule_string
 
     json.extendedProps do
-      json.id rand(1..100)
-      json.company Faker::Company.name
-    end
-
-    json.rrule do
-      json.freq ['weekly', 'monthly'].sample
-      json.interval rand(1..4)
-      json.dtstart Faker::Date.between(8.days.ago, Time.zone.today)
+      json.payee do
+        json.name payee.name
+        json.nickname payee.nickname
+        json.website payee.website
+        json.phone_number payee.phone_number
+      end
+      json.minimum_payment schedule.minimum_payment
+      json.autopay schedule.autopay
+      json.start_date schedule.start_date
+      json.end_date schedule.end_date
+      json.frequency Schedule.frequencies[schedule.frequency][:description]
     end
   end
