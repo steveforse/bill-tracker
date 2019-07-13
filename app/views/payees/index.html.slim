@@ -6,7 +6,7 @@
   .card-body.p-0
     - if @payees.any?
       .table-responsive
-        table.table.table-striped.table-bordered.table-hover
+        table.table.table-striped.table-bordered.table-hover.table-sm
           thead.thead-light
             tr
               th = sortable 'Name', :name
@@ -27,6 +27,7 @@
                       data: { confirm: 'Deleting this payee will also delete all associated ' \
                                        'schedules. Are you sure you want to delete this payee?' },
                       method: :delete
+        = paginate @payees
     - else
       .h5.text-center.p-3 Create a payee to get started
 
