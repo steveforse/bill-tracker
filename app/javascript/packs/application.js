@@ -18,7 +18,7 @@ import 'tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.css'
 
 // Replaces standard checkboxes with something a little easier to read
 import 'bootstrap4-toggle'
-import 'bootstrap4-toggle/css/bootstrap4-toggle.css'
+import 'bootstrap4-toggle/css/bootstrap4-toggle.min.css'
 
 // Import our application css
 import '../stylesheets/application.scss'
