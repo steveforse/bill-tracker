@@ -1,11 +1,17 @@
-.calendar-container {
-  .fc-list-item-time {
+.list-container {
+  .fc-list-item-time,
+  .fc-header-toolbar {
     display: none;
   }
 }
 
-.list-container {
-  .fc-header-toolbar {
+.calendar-container {
+  .fc-time {
     display: none;
   }
+}
+
+.payment-late {
+  background-color: #dc3545;
+  border-color: #dc3545;
 }
