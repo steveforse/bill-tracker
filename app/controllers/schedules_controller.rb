@@ -3,13 +3,22 @@
 # Conroller for creating/editing schedules
 class SchedulesController < ApplicationController
   before_action :set_payee, only: %i[new create]
-  before_action :set_schedule, only: %i[edit update destroy]
+  before_action :set_schedule, only: %i[edit update destroy show]
   before_action only: %i[update create] do convert_to_sql_dates( [:start_date, :end_date]) end
 
   # GET /payees/1/schedules/new
   def new
     @schedule = Schedule.new
     @schedule.payee = @payee
+  end
+
+  # GET /schedules/1
+  def show
+    @schedule = @schedule.decorate
+    @payments = @schedule.payments
+                         .rezort(params[:sort], 'date ASC')
+                         .page(params[:page])
+                         .decorate
   end
 
   # GET /schedules/1/edit
@@ -40,7 +49,7 @@ class SchedulesController < ApplicationController
   def update
     respond_to do |format|
       if @schedule.update(schedule_params)
-        format.html { redirect_to @schedule.payee, notice: 'Schedule was successfully updated.' }
+        format.html { redirect_to @schedule, notice: 'Schedule was successfully updated.' }
         format.json { render :show, status: :ok, location: @schedule }
       else
         format.html { render :edit }
@@ -72,6 +81,7 @@ class SchedulesController < ApplicationController
 
   def schedule_params
     params.require(:schedule).permit(
+      :name,
       :start_date,
       :end_date,
       :frequency,
