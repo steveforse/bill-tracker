@@ -38,10 +38,10 @@ textarea.form-control {
   height: 12em;
 }
 
-pre.scrollable {
+pre.scrollable:not(:empty) {
   padding: 5px;
   max-height: 12em;
-  overflow-y: scroll;
+  overflow-y: auto;
   border: 1px solid #ccc;
 }
 
