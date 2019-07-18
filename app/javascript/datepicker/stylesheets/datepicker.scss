@@ -1,0 +1,48 @@
+.datepicker-table {
+  margin: 0;
+  padding: 2px;
+  cursor: pointer;
+
+  td {
+    border-radius: 5px;
+  }
+
+  .button:hover {
+    background-color: LightGray;
+  }
+
+  .monthHeader,
+  .day-of-week {
+    cursor: default;
+  }
+
+  .today {
+    background-color: LightCyan;
+  }
+
+  .active,
+  .active:hover {
+    background-color: #0062cc;
+    border-color: #005cbf;
+    color: #fff;
+  }
+
+  .non-current {
+    color: Gray;
+  }
+
+  .non-current.disabled,
+  .disabled {
+    cursor: default;
+    color: Silver;
+  }
+
+  .header {
+    font-weight: bold;
+  }
+}
+
+.datepicker .input-group,
+.datepicker .input-group input {
+  cursor: pointer;
+}
