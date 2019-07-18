@@ -192,7 +192,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  # Input Group - custom component
+  # Input Group - custom component; see also lib/components for InputGroup component def
   # see example app and config at https://github.com/rafaelfranca/simple_form-bootstrap
   config.wrappers :horizontal_input_group, tag: 'div', class: 'form-group row',
                                            error_class: 'form-group-invalid',
@@ -495,12 +495,17 @@ SimpleForm.setup do |config|
   config.wrapper_mappings = {
     boolean: :horizontal_toggle,
     check_boxes: :horizontal_collection,
-    date: :horizontal_multi_select,
-    datetime: :horizontal_multi_select,
+    date: :horizontal_input_group,
+    datetime: :horizontal_input_group,
     file: :vertical_file,
     radio_buttons: :vertical_collection,
     range: :vertical_range,
-    time: :vertical_multi_select
+    time: :vertical_multi_select,
+    datepicker: :horizontal_input_group,
+  }
+
+  config.input_mappings = {
+   /date/ => :datepicker
   }
 end
 # rubocop:enable Metrics/BlockLength
