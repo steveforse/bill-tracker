@@ -3,8 +3,8 @@
 
   .form-inputs
     = f.input :name
-    = f.input :start_date, as: :datepicker
-    = f.input :end_date, as: :datepicker
+    = f.input :start_date, append: icon('calendar-alt')
+    = f.input :end_date, append: icon('calendar-alt')
     = f.input :frequency, as: :grouped_select,
                           prompt: 'Select a payment frequency',
                           collection: grouped_frequencies,
