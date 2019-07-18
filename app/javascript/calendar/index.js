@@ -19,6 +19,8 @@ import tippy from 'tippy.js'
 import 'tippy.js/themes/light-border.css'
 
 $(document).on('turbolinks:load', () => {
+  if (!document.querySelector('.calendar-container')) { return }
+
   let baseConfig = {
     themeSystem: 'bootstrap',
     fixedWeekCount: false,
