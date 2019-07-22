@@ -11,7 +11,25 @@
   }
 }
 
-.payment-late {
-  background-color: #dc3545;
-  border-color: #dc3545;
+.payment.unpaid-due {
+  background-color: goldenrod;
+  border-color: goldenrod;
 }
+
+.payment.unpaid-late {
+  background-color: crimson;
+  border-color: crimson;
+}
+
+.payment.paid-late {
+  background-color: olivedrab;
+  border-color: olivedrab;
+  color: lightpink;
+  font-weight: 800;
+}
+
+.payment.paid-on-time {
+  background-color: olivedrab;
+  border-color: olivedrab;
+}
+
