@@ -5,6 +5,23 @@
     .row
       .col-md-12.col-lg-8.mb-4
         .calendar-container
+        fieldset.border.p-2
+          legend.w-auto Monthly Totals
+          .totals-container
+        fieldset.border.p-2
+          legend.w-auto Color Legend
+          .row
+            .col-sm-4.text-center
+              span.fc-event-dot.payment.unpaid-late
+              |  Unpaid Late
+            .col-sm-4.text-center
+              span.fc-event-dot.payment.unpaid-due
+              |  Unpaid Due
+            .col-sm-4.text-center
+              span.fc-event-dot.payment.paid-late
+              |  Paid
+
+
       .col-md-12.col-lg-4
         .list-container
 

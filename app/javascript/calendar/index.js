@@ -18,19 +18,75 @@ import './stylesheets/calendar.scss'
 import tippy from 'tippy.js'
 import 'tippy.js/themes/light-border.css'
 
+// Utility
+import _ from 'lodash'
+
+$(document).on('turbolinks:before-cache', () => {
+  let calendar = document.querySelector('.calendar-container')
+  if (calendar) { calendar.innerHTML = '' }
+
+  let list = document.querySelector('.list-container')
+  if (list) { list.innerHTML = '' }
+
+  let popup = document.querySelector('.tippy-popper')
+  if (popup) { popup.parentNode.removeChild(popup) }
+})
+
 $(document).on('turbolinks:load', () => {
   if (!document.querySelector('.calendar-container')) { return }
 
-  let baseConfig = {
+  let total = {
+    minimumTotal: 0,
+    actualPaid: 0,
+  }
+
+  const numberToCurrency = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  })
+
+  let totals = {
+    totalDue: 0,
+    amountPaid: 0,
+
+  }
+
+  let getPaymentClass = (dueDate, payments) => {
+    let today = moment.utc().format('YYYY-MM-DD')
+    let status = null
+
+    payments.forEach(payment => {
+      if (payment.due_date === dueDate) {
+        if (payment.date <= dueDate) { status = 'paid-on-time' }
+        if (payment.date > dueDate && !status) { status = 'paid-late' }
+      }
+    })
+
+    if (!status) { status = (today > dueDate) ? 'unpaid-late' : 'unpaid-due' }
+    return status
+  }
+
+  let getPaymentAmounts = (dueDate, payments) => {
+    let amounts = {}
+    payments.forEach(payment => {
+      if (payment.due_date === dueDate) {
+        if (!amounts[payment.due_date]) { amounts[payment.due_date] = 0 }
+        amounts[payment.due_date] += Number(payment.amount)
+      }
+    })
+    return amounts
+  }
+
+  const baseConfig = {
     themeSystem: 'bootstrap',
     fixedWeekCount: false,
     height: 'auto',
     showNonCurrentDates: false,
-    eventSources: [ '/calendar/events.json' ],
+    eventSources: ['/calendar/events.json']
   }
 
   let calendarConfig = {
-    plugins: [ dayGridPlugin, bootstrapPlugin, rrulePlugin ],
+    plugins: [dayGridPlugin, bootstrapPlugin, rrulePlugin],
     defaultView: 'dayGridMonth',
     customButtons: {
       next: {
@@ -54,47 +110,136 @@ $(document).on('turbolinks:load', () => {
       }
     },
     eventRender: (eventInfo) => {
-      let element = eventInfo.el
-      let props = eventInfo.event.extendedProps
+      const element = eventInfo.el
+      element.classList.add('payment')
 
-      element.classList.add('payment-late')
+      const dueDate = moment.utc(eventInfo.event.start).format('YYYY-MM-DD')
+      const today = moment.utc().format('YYYY-MM-DD')
+      const props = eventInfo.event.extendedProps
+
+      const paymentClass = getPaymentClass(dueDate, props.payments)
+      element.classList.add(paymentClass)
+
+      let statusText = _.startCase(_.camelCase(paymentClass))
+      let button = ''
+      let amountPaidRow = ''
+      if (paymentClass.startsWith('unpaid')) {
+        button = `<a href="/schedules/${props.schedule_id}/payments/new"
+                  class="btn btn-sm btn-primary">Make Payment</a><br/>`
+      } else {
+        let amounts = getPaymentAmounts(dueDate, props.payments)
+        let amountPaid = amounts[dueDate] || props.minimum_payment
+        amountPaidRow = `
+          <tr>
+            <td class="text-right font-weight-bold">Amount Paid</td>
+            <td class="text-left">${numberToCurrency.format(amountPaid)}</td>
+          </tr>`
+      }
+
+      let popupContent = `
+        <table class="table table-sm table-borderless">
+          <tr>
+            <td class="text-right font-weight-bold">Payee Name</td>
+            <td class="text-left">
+              <a href="/payees/${props.payee.id}">${props.payee.name}</a>
+            </td>
+          <tr>
+          <tr>
+            <td class="text-right font-weight-bold">Schedule Name</td>
+            <td class="text-left">
+              <a href="/schedules/${props.schedule_id}">${eventInfo.event.title}</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-right font-weight-bold">Autopay</td>
+            <td class="text-left">
+              ${props.autopay ? 'Enabled' : 'Disabled'}
+            </td>
+          </tr>
+          <tr>
+            <td class="text-right font-weight-bold">Payment Status</td>
+            <td class="text-left">${statusText}</td>
+          </tr>
+          <tr>
+            <td class="text-right font-weight-bold">Minimum Due</td>
+            <td class="text-left">${numberToCurrency.format(props.minimum_payment)}</td>
+          </tr>
+          ${amountPaidRow}
+        </table>
+        ${button}
+      `
 
       tippy(element, {
-        content: 'here it is'
+        content: popupContent,
+        arrow: true,
+        trigger: 'click',
+        theme: 'light-border',
+        interactive: true,
+        boundary: 'viewport'
       })
     }
   }
 
   let listConfig = {
-    plugins: [ bootstrapPlugin, rrulePlugin, listPlugin ],
-    header: { left: '', center: '', right: ''  },
+    plugins: [bootstrapPlugin, rrulePlugin, listPlugin],
+    header: { left: '', center: '', right: '' },
     defaultView: 'listMonth',
     eventRender: (eventInfo) => {
-      let props = eventInfo.event.extendedProps
-      let number_to_currency = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
-      })
+      const dueDate = moment.utc(eventInfo.event.start).format('YYYY-MM-DD')
+      const props = eventInfo.event.extendedProps
+      const paymentClass = getPaymentClass(dueDate, props.payments)
 
-      // DOM element
-      let element = eventInfo.el
+      // Determine amount to display (actual or expected minimum)
+      let amounts = getPaymentAmounts(dueDate, props.payments)
+      let amount = amounts[dueDate] || props.minimum_payment
 
-      // Create alternative title
-      let amount = number_to_currency.format(props.minimum_payment)
-      let name = props.payee.nickname || props.payee.name
-      let title = `${name} - ${amount}`
+      // Update totals
+      total.minimumTotal += Number(props.minimum_payment)
+      if (paymentClass.startsWith('paid') && amounts[dueDate]) {
+        total.actualPaid += amounts[dueDate]
+      }
+      document.querySelector('.totals-container').innerHTML = `
+        <table class="table table-sm">
+          <tbody>
+            <tr>
+              <td class="text-right font-weight-bold">Minimum Total</td>
+              <td class="text-left">${numberToCurrency.format(total.minimumTotal)}</td>
+            </tr>
+            <tr>
+              <td class="text-right font-weight-bold">Amount Paid To Date</td>
+              <td class="text-left">${numberToCurrency.format(total.actualPaid)}</td>
+            <tr>
+          </tbody>
+        </table>
+      `
+
+      amount = numberToCurrency.format(amount)
+      const name = props.payee.nickname || props.payee.name
 
       // Modify title text before rendering
-      $(element).find('.fc-list-item-title')
-                .after(`<td class="text-right minimum-amount">${amount}</td>`)
+      eventInfo.el.querySelector('.fc-list-item-title')
+                  .insertAdjacentHTML('afterend',
+                                      `<td class="text-right minimum-amount">${amount}</td>`)
+
+
+      let dot = eventInfo.el.querySelector('.fc-event-dot')
+      dot.classList.add('payment')
+      dot.classList.add(paymentClass)
     },
+    eventSourceSuccess: (content, xhr) => {
+      total = {
+        minimumTotal: 0,
+        actualPaid: 0,
+      }
+    }
   }
 
-  listConfig = {...baseConfig,  ...listConfig}
-  calendarConfig = {...baseConfig, ...calendarConfig}
+  listConfig = { ...baseConfig, ...listConfig }
+  calendarConfig = { ...baseConfig, ...calendarConfig }
 
-  window.calendar = new Calendar($('.calendar-container')[0], calendarConfig)
-  window.list = new Calendar($('.list-container')[0], listConfig)
-  window.calendar.render()
-  window.list.render()
+  window.list = new Calendar(document.querySelector('.list-container'), listConfig)
+  list.render()
+
+  window.calendar = new Calendar(document.querySelector('.calendar-container'), calendarConfig)
+  calendar.render()
 })
