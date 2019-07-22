@@ -47,8 +47,25 @@ $(document).on('turbolinks:load', () => {
 
   let totals = {
     totalDue: 0,
-    amountPaid: 0,
+    amountPaid: 0
 
+  }
+
+  let updateTotalsHTML = (totals) => {
+    document.querySelector('.totals-container').innerHTML = `
+      <table class="table table-sm">
+        <tbody>
+          <tr>
+            <td class="text-right font-weight-bold">Minimum Total</td>
+            <td class="text-left">${numberToCurrency.format(totals.minimumTotal)}</td>
+          </tr>
+          <tr>
+            <td class="text-right font-weight-bold">Amount Paid To Date</td>
+            <td class="text-left">${numberToCurrency.format(totals.actualPaid)}</td>
+          <tr>
+        </tbody>
+      </table>
+    `
   }
 
   let getPaymentClass = (dueDate, payments) => {
@@ -194,24 +211,12 @@ $(document).on('turbolinks:load', () => {
       let amount = amounts[dueDate] || props.minimum_payment
 
       // Update totals
-      total.minimumTotal += Number(props.minimum_payment)
+      totals.minimumTotal += Number(props.minimum_payment)
       if (paymentClass.startsWith('paid') && amounts[dueDate]) {
-        total.actualPaid += amounts[dueDate]
+        totals.actualPaid += amounts[dueDate]
       }
-      document.querySelector('.totals-container').innerHTML = `
-        <table class="table table-sm">
-          <tbody>
-            <tr>
-              <td class="text-right font-weight-bold">Minimum Total</td>
-              <td class="text-left">${numberToCurrency.format(total.minimumTotal)}</td>
-            </tr>
-            <tr>
-              <td class="text-right font-weight-bold">Amount Paid To Date</td>
-              <td class="text-left">${numberToCurrency.format(total.actualPaid)}</td>
-            <tr>
-          </tbody>
-        </table>
-      `
+
+      updateTotalsHTML(totals)
 
       amount = numberToCurrency.format(amount)
       const name = props.payee.nickname || props.payee.name
@@ -227,10 +232,11 @@ $(document).on('turbolinks:load', () => {
       dot.classList.add(paymentClass)
     },
     eventSourceSuccess: (content, xhr) => {
-      total = {
+      totals = {
         minimumTotal: 0,
-        actualPaid: 0,
+        actualPaid: 0
       }
+      updateTotalsHTML(totals)
     }
   }
 
