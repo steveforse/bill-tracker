@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Payment model
 class Payment < ApplicationRecord
   # Relations
   belongs_to :schedule

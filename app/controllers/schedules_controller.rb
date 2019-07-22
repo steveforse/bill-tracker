@@ -4,7 +4,9 @@
 class SchedulesController < ApplicationController
   before_action :set_payee, only: %i[new create]
   before_action :set_schedule, only: %i[edit update destroy show]
-  before_action only: %i[update create] do convert_to_sql_dates( [:start_date, :end_date]) end
+  before_action only: %i[update create] do
+    convert_to_sql_dates(%i[start_date end_date])
+  end
 
   # GET /payees/1/schedules/new
   def new

@@ -34,7 +34,7 @@ class Schedule < ApplicationRecord
 
       # Year-based frequencies
       'annually' => { description: 'Once every year', frequency: 'yearly', interval: 1 },
-      'semiannually' => { description: 'Twice every year', frequency: 'yearly', interval: 1 },
+      'semiannually' => { description: 'Twice every year', frequency: 'yearly', interval: 1 }
     }.freeze
   end
 
@@ -56,6 +56,7 @@ class Schedule < ApplicationRecord
 
   def rrule_dtend
     return nil if end_date.blank?
+
     "DTEND=#{rrule_date_format(end_date)}"
   end
 
@@ -73,6 +74,7 @@ class Schedule < ApplicationRecord
 
   def rrule_semimonthly_bymonthdays
     return nil if frequency != 'semimonthly'
+
     start_day = start_date.day
     match_day = start_day > 14 ? start_day - 14 : start_day + 14
     "BYMONTHDAY=#{start_day},#{match_day}"
@@ -80,6 +82,7 @@ class Schedule < ApplicationRecord
 
   def rrule_semiannually_bymonth
     return nil if frequency != 'semiannually'
+
     start_month = start_date.month
     match_month = start_month > 6 ? start_month - 6 : start_month + 6
     "BYMONTH=#{start_month},#{match_month}"

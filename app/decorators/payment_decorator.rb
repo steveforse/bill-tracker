@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Mostly for amounts
 class PaymentDecorator < ApplicationDecorator
   delegate_all
 

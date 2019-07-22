@@ -501,11 +501,11 @@ SimpleForm.setup do |config|
     radio_buttons: :vertical_collection,
     range: :vertical_range,
     time: :vertical_multi_select,
-    datepicker: :horizontal_input_group,
+    datepicker: :horizontal_input_group
   }
 
   config.input_mappings = {
-   /date/ => :datepicker
+    /date/ => :datepicker
   }
 end
 # rubocop:enable Metrics/BlockLength

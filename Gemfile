@@ -34,9 +34,9 @@ gem 'slim-rails'
 ###########
 # HELPERS #
 ###########
+gem 'kaminari'
 gem 'rezort', git: 'https://github.com/steveforse/rezort'
 gem 'simple_form'
-gem 'kaminari'
 
 ##########
 # SERVER #

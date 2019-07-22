@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 
-# rubocop: disable Metrics/BlockLength
 RSpec.describe SchedulesController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Schedule. As you add validations to Schedule, be sure to
@@ -114,4 +113,3 @@ RSpec.describe SchedulesController, type: :controller do
     end
   end
 end
-# rubocop: enable Metrics/BlockLength

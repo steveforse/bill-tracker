@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 
-# rubocop: disable Metrics/BlockLength
 RSpec.describe ApplicationHelper, type: :helper do
   describe 'flash_class' do
     let(:flash_class_map) do
@@ -114,4 +113,3 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 end
-# rubocop: enable Metrics/BlockLength

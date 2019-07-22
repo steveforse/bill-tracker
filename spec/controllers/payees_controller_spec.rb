@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 
-# rubocop: disable Metrics/BlockLength
 RSpec.describe PayeesController, type: :controller do
   let(:valid_attributes) do
     attributes_for(:payee)
@@ -113,4 +112,3 @@ RSpec.describe PayeesController, type: :controller do
     end
   end
 end
-# rubocop: enable Metrics/BlockLength

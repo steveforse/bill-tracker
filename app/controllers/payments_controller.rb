@@ -1,7 +1,12 @@
+# frozen_string_literal: true
+
+# Handles creation of payments
 class PaymentsController < ApplicationController
   before_action :set_schedule, only: %i[new create]
-  before_action :set_payment, only: [:show, :edit, :update, :destroy]
-  before_action only: %i[update create] do convert_to_sql_dates([:date, :due_date]) end
+  before_action :set_payment, only: %i[show edit update destroy]
+  before_action only: %i[update create] do
+    convert_to_sql_dates(%i[date due_date])
+  end
 
   # GET /payments
   # GET /payments.json
@@ -12,8 +17,7 @@ class PaymentsController < ApplicationController
 
   # GET /payments/1
   # GET /payments/1.json
-  def show
-  end
+  def show; end
 
   # GET /payments/new
   def new
@@ -22,11 +26,11 @@ class PaymentsController < ApplicationController
   end
 
   # GET /payments/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /payments
   # POST /payments.json
+  # rubocop: disable Metrics/AbcSize
   def create
     @payment = Payment.new(payment_params)
     @payment.schedule_id = @schedule.id
@@ -41,6 +45,7 @@ class PaymentsController < ApplicationController
       end
     end
   end
+  # rubocop: enable Metrics/AbcSize
 
   # PATCH/PUT /payments/1
   # PATCH/PUT /payments/1.json

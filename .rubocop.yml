@@ -9,6 +9,7 @@ AllCops:
       - 'bin/**/*'
       - 'node_modules/**/*'
       - 'test/**/*'
+      - 'db/schema.rb'
 
 Metrics/LineLength:
   Max: 100
@@ -18,8 +19,7 @@ Metrics/MethodLength:
 
 Metrics/BlockLength:
   Exclude:
-    - 'spec/views/**/*'
-    - 'spec/system/**/*'
+    - 'spec/**/*'
 
 RSpec/ExampleLength:
   Exclude:
