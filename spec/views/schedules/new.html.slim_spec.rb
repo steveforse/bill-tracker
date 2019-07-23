@@ -13,13 +13,16 @@ RSpec.describe 'schedules/new', type: :view do
 
     assert_select 'form[action=?][method=?]', payee_schedules_path(schedule.payee), 'post' do
       assert_select 'div.form-inputs', count: 1 do
-        assert_select 'input', count: 5
+        assert_select 'input', count: 6
+
+        assert_select 'label', text: 'Name *'
+        assert_select 'input[name="schedule[name]"]'
 
         assert_select 'label', text: 'Start date *'
-        assert_select 'input[data-toggle=datetimepicker][name="schedule[start_date]"]'
+        assert_select 'input[name="schedule[start_date]"]'
 
         assert_select 'label', text: 'End date'
-        assert_select 'input[data-toggle=datetimepicker][name="schedule[end_date]"]'
+        assert_select 'input[name="schedule[end_date]"]'
 
         assert_select 'label', text: 'Frequency'
         assert_select 'select[name="schedule[frequency]"]' do
