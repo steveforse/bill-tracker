@@ -4,11 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'payments/show', type: :view do
   before do
-    @payment = assign(:payment, Payment.create!(
-                                  schedule_id: 2,
-                                  amount: '',
-                                  comment: 'MyText'
-                                ))
+    @payment = assign(:payment, create(:payment))
   end
 
   it 'renders attributes in <p>' do
