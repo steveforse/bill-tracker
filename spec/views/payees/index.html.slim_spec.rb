@@ -14,7 +14,7 @@ RSpec.describe 'payees/index', type: :view do
                    website: 'https://beta',
                    phone_number: '123-123-1234')
 
-    assign(:payees, Payee.all.order(:name).decorate)
+    assign(:payees, Payee.all.order(:name).page(1).decorate)
     render
   end
 
