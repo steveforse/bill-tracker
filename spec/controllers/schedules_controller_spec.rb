@@ -86,7 +86,7 @@ RSpec.describe SchedulesController, type: :controller do
       it 'redirects to the schedule' do
         put :update, params: { id: schedule.to_param, schedule: valid_attributes },
                      session: valid_session
-        expect(response).to redirect_to(schedule.payee)
+        expect(response).to redirect_to(schedule)
       end
     end
 
