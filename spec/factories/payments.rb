@@ -2,10 +2,10 @@
 
 FactoryBot.define do
   factory :payment do
-    schedule_id { 1 }
-    amount { '' }
-    date { '2019-07-05' }
-    comment { 'MyText' }
-    due_on { '2019-07-05' }
+    schedule
+    amount { Faker::Number.decimal(4,2) }
+    comment { Faker::Movies::PrincessBride.quote }
+    due_date { schedule.start_date + 3.months }
+    date { rand((due_date - 3.days)..(due_date + 3.days)) }
   end
 end
