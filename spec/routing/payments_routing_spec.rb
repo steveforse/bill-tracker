@@ -4,12 +4,8 @@ require 'rails_helper'
 
 RSpec.describe PaymentsController, type: :routing do
   describe 'routing' do
-    it 'routes to #index' do
-      expect(get: '/payments').to route_to('payments#index')
-    end
-
     it 'routes to #new' do
-      expect(get: '/payments/new').to route_to('payments#new')
+      expect(get: '/schedules/1/payments/new').to route_to('payments#new', schedule_id: '1')
     end
 
     it 'routes to #show' do
@@ -21,7 +17,7 @@ RSpec.describe PaymentsController, type: :routing do
     end
 
     it 'routes to #create' do
-      expect(post: '/payments').to route_to('payments#create')
+      expect(post: '/schedules/1/payments').to route_to('payments#create', schedule_id: '1')
     end
 
     it 'routes to #update via PUT' do
