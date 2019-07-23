@@ -6,39 +6,37 @@ import tippy from 'tippy.js'
 import 'tippy.js/themes/light-border.css'
 
 // For time manipulation
-import 'moment'
+import moment from 'moment'
 import { rrulestr } from 'rrule'
 
-window.moment = moment
-
 export default class DatePicker {
-  constructor (input, config={}) {
+  constructor (input, config = {}) {
     // Keep track of how we initialized datepicker
     this.input = input
     this.config = config
 
-    this.popup = null         // Tippy.js popup
-    this.DOM = null           // Currently rendered DOM in popup
-    this.selectedDate = null  // Date currently selected by user in DOM
+    this.popup = null // Tippy.js popup
+    this.DOM = null // Currently rendered DOM in popup
+    this.selectedDate = null // Date currently selected by user in DOM
 
     // Attributes based on config
-    this.rrule = null   // RRule object. Calendar will only enable matching dates.
+    this.rrule = null // RRule object. Calendar will only enable matching dates.
 
     // Get ready for first render
-    this.parseConfig()          // Initialize datepicker based on config settings
-    this.parseInputValue()      // Will attempt to set selecteDate
-    this.modifyInputField()     // Will add autocomplete=off
+    this.parseConfig() // Initialize datepicker based on config settings
+    this.parseInputValue() // Will attempt to set selecteDate
+    this.modifyInputField() // Will add autocomplete=off
     this.addPopupToInputField() // Display calendar when clicking on input field
 
     // Render calendar DOM for popup
     this.generateCalendarDOM(this.selectedDate || moment.utc())
   }
 
-  parseConfig() {
+  parseConfig () {
     if (this.config.rrule) { this.rrule = rrulestr(this.config.rrule) }
   }
 
-  parseInputValue() {
+  parseInputValue () {
     this.selectedDate = moment.utc(this.input.value, 'MM/DD/YYYY')
     if (!this.selectedDate.isValid()) {
       this.selectedDate = null
@@ -46,13 +44,13 @@ export default class DatePicker {
     }
   }
 
-  modifyInputField() {
+  modifyInputField () {
     this.input.setAttribute('autocomplete', 'off')
   }
 
-  ///////////
+  /// ////////
   // Popup //
-  ///////////
+  /// ////////
 
   addPopupToInputField () {
     let element = this.input
@@ -67,13 +65,13 @@ export default class DatePicker {
     })
   }
 
-  ///////////////////
+  /// ////////////////
   // Calendar View //
-  ///////////////////
+  /// ////////////////
 
-  setActiveClass(buttonValue) {
+  setActiveClass (buttonValue) {
     const element = this.DOM
-                        .querySelector(`td.button[data-value="${buttonValue}"]`)
+      .querySelector(`td.button[data-value="${buttonValue}"]`)
     if (element) { element.classList.add('active') }
   }
 
@@ -152,12 +150,12 @@ export default class DatePicker {
     let datesAllowed = null
     if (this.rrule) {
       datesAllowed = this.rrule
-                         .between(calendarStart.toDate(), calendarEnd.toDate())
-                         .map((day) => { return moment.utc(day).format('YYYY-MM-DD') })
+        .between(calendarStart.toDate(), calendarEnd.toDate())
+        .map((day) => { return moment.utc(day).format('YYYY-MM-DD') })
     }
 
     let rows = ''
-    for (let current = moment.utc(calendarStart); current < calendarEnd; current.add(1, 'days')) {
+    for (let current = moment.utc(calendarStart); current < calendarEnd; current = current.add(1, 'days')) {
       if (current.day() === 0) { rows += '<tr>' }
 
       // Allows button to be clickable
@@ -168,7 +166,7 @@ export default class DatePicker {
         }
       }
       if (current < startDate || current > endDate) { dayClass += ' non-current' }
-      if (current.format('YYYY-MM-DD') == moment.utc().format('YYYY-MM-DD')) { dayClass += ' today' }
+      if (current.format('YYYY-MM-DD') === moment.utc().format('YYYY-MM-DD')) { dayClass += ' today' }
       rows += `<td class="${dayClass}"
                    data-value=${current.format('YYYY-MM-DD')}
                >${current.date()}</td>`
@@ -195,11 +193,11 @@ export default class DatePicker {
     this.addEventsToCalendarDOM()
   }
 
-  ///////////////////////
+  /// ////////////////////
   // Month Select View //
-  ///////////////////////
-  generateMonthSelectDOM(year) {
-    let monthSelectHeader = `
+  /// ////////////////////
+  generateMonthSelectDOM (year) {
+    const monthSelectHeader = `
       <tr>
         <td class="button"
             data-action="year-prev"
@@ -215,17 +213,16 @@ export default class DatePicker {
       </tr>
     `
 
-
     let rows = '<tr><td></td>'
     for (let i = 1; i <= 12; i++) {
       rows += `<td class="button"
-                   data-value="${moment.utc(year, 'YYYY').set('month', i-1).format('YYYY-MM')}"
-               >${moment.monthsShort()[i-1]}</td>`
-      if (i % 4 == 0) { rows += '<td></td></tr><tr><td></td>' }
+                   data-value="${moment.utc(year, 'YYYY').set('month', i - 1).format('YYYY-MM')}"
+               >${moment.monthsShort()[i - 1]}</td>`
+      if (i % 4 === 0) { rows += '<td></td></tr><tr><td></td>' }
     }
     rows += '</tr>'
 
-    let table = `
+    const table = `
       <table class="table table-sm table-borderless datepicker-table">
         <thead>
           ${monthSelectHeader}
@@ -244,7 +241,7 @@ export default class DatePicker {
     this.addEventsToMonthSelect(year)
   }
 
-  addEventsToMonthSelect(year) {
+  addEventsToMonthSelect (year) {
     // Allows clicking on calendar days
     Array.from(this.DOM.querySelectorAll('tbody td')).forEach((day) => {
       day.addEventListener('click', (e) => {
@@ -269,5 +266,4 @@ export default class DatePicker {
       })
     }
   }
-
 }

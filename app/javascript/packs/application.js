@@ -1,8 +1,3 @@
-require("@rails/ujs").start()
-require("turbolinks").start()
-require("@rails/activestorage").start()
-require("channels")
-
 // Load bootstrap javascript and css (with our overrides)
 import 'bootstrap'
 import '../stylesheets/bootstrap.scss'
@@ -17,13 +12,19 @@ import '../datepicker/stylesheets/datepicker.scss'
 
 // Import our application css
 import '../stylesheets/application.scss'
+import $ from 'jquery'
+
+require('@rails/ujs').start()
+require('turbolinks').start()
+require('@rails/activestorage').start()
+require('channels')
 
 // Run this on every page load
-$(document).on('turbolinks:load', () => {
+document.addEventListener('turbolinks:load', () => {
   $('.simple_form input[type="checkbox"]').bootstrapToggle()
 
+  const datepickers = []
   document.querySelectorAll('input.datepicker').forEach(element => {
-    new DatePicker(element, { rrule: element.dataset.rrule })
+    datepickers.push(new DatePicker(element, { rrule: element.dataset.rrule }))
   })
 })
-

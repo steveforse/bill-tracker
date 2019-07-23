@@ -19,26 +19,22 @@ import tippy from 'tippy.js'
 import 'tippy.js/themes/light-border.css'
 
 // Utility
+import moment from 'moment'
 import _ from 'lodash'
 
-$(document).on('turbolinks:before-cache', () => {
-  let calendar = document.querySelector('.calendar-container')
+document.addEventListener('turbolinks:before-cache', () => {
+  const calendar = document.querySelector('.calendar-container')
   if (calendar) { calendar.innerHTML = '' }
 
-  let list = document.querySelector('.list-container')
+  const list = document.querySelector('.list-container')
   if (list) { list.innerHTML = '' }
 
-  let popup = document.querySelector('.tippy-popper')
+  const popup = document.querySelector('.tippy-popper')
   if (popup) { popup.parentNode.removeChild(popup) }
 })
 
-$(document).on('turbolinks:load', () => {
+document.addEventListener('turbolinks:load', () => {
   if (!document.querySelector('.calendar-container')) { return }
-
-  let total = {
-    minimumTotal: 0,
-    actualPaid: 0,
-  }
 
   const numberToCurrency = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -48,10 +44,11 @@ $(document).on('turbolinks:load', () => {
   let totals = {
     totalDue: 0,
     amountPaid: 0
-
   }
 
-  let updateTotalsHTML = (totals) => {
+  const calendarViews = {}
+
+  const updateTotalsHTML = (totals) => {
     document.querySelector('.totals-container').innerHTML = `
       <table class="table table-sm">
         <tbody>
@@ -68,8 +65,8 @@ $(document).on('turbolinks:load', () => {
     `
   }
 
-  let getPaymentClass = (dueDate, payments) => {
-    let today = moment.utc().format('YYYY-MM-DD')
+  const getPaymentClass = (dueDate, payments) => {
+    const today = moment.utc().format('YYYY-MM-DD')
     let status = null
 
     payments.forEach(payment => {
@@ -83,8 +80,8 @@ $(document).on('turbolinks:load', () => {
     return status
   }
 
-  let getPaymentAmounts = (dueDate, payments) => {
-    let amounts = {}
+  const getPaymentAmounts = (dueDate, payments) => {
+    const amounts = {}
     payments.forEach(payment => {
       if (payment.due_date === dueDate) {
         if (!amounts[payment.due_date]) { amounts[payment.due_date] = 0 }
@@ -108,21 +105,21 @@ $(document).on('turbolinks:load', () => {
     customButtons: {
       next: {
         click: () => {
-          calendar.next()
-          list.next()
+          calendarViews.calendar.next()
+          calendarViews.list.next()
         }
       },
       prev: {
         click: () => {
-          calendar.prev()
-          list.prev()
+          calendarViews.calendar.prev()
+          calendarViews.list.prev()
         }
       },
       today: {
         text: 'Today',
         click: () => {
-          calendar.today()
-          list.today()
+          calendarViews.calendar.today()
+          calendarViews.list.today()
         }
       }
     },
@@ -131,21 +128,20 @@ $(document).on('turbolinks:load', () => {
       element.classList.add('payment')
 
       const dueDate = moment.utc(eventInfo.event.start).format('YYYY-MM-DD')
-      const today = moment.utc().format('YYYY-MM-DD')
       const props = eventInfo.event.extendedProps
 
       const paymentClass = getPaymentClass(dueDate, props.payments)
       element.classList.add(paymentClass)
 
-      let statusText = _.startCase(_.camelCase(paymentClass))
+      const statusText = _.startCase(_.camelCase(paymentClass))
       let button = ''
       let amountPaidRow = ''
       if (paymentClass.startsWith('unpaid')) {
         button = `<a href="/schedules/${props.schedule_id}/payments/new"
                   class="btn btn-sm btn-primary">Make Payment</a><br/>`
       } else {
-        let amounts = getPaymentAmounts(dueDate, props.payments)
-        let amountPaid = amounts[dueDate] || props.minimum_payment
+        const amounts = getPaymentAmounts(dueDate, props.payments)
+        const amountPaid = amounts[dueDate] || props.minimum_payment
         amountPaidRow = `
           <tr>
             <td class="text-right font-weight-bold">Amount Paid</td>
@@ -153,7 +149,7 @@ $(document).on('turbolinks:load', () => {
           </tr>`
       }
 
-      let popupContent = `
+      const popupContent = `
         <table class="table table-sm table-borderless">
           <tr>
             <td class="text-right font-weight-bold">Payee Name</td>
@@ -207,7 +203,7 @@ $(document).on('turbolinks:load', () => {
       const paymentClass = getPaymentClass(dueDate, props.payments)
 
       // Determine amount to display (actual or expected minimum)
-      let amounts = getPaymentAmounts(dueDate, props.payments)
+      const amounts = getPaymentAmounts(dueDate, props.payments)
       let amount = amounts[dueDate] || props.minimum_payment
 
       // Update totals
@@ -219,15 +215,13 @@ $(document).on('turbolinks:load', () => {
       updateTotalsHTML(totals)
 
       amount = numberToCurrency.format(amount)
-      const name = props.payee.nickname || props.payee.name
 
       // Modify title text before rendering
       eventInfo.el.querySelector('.fc-list-item-title')
-                  .insertAdjacentHTML('afterend',
-                                      `<td class="text-right minimum-amount">${amount}</td>`)
+        .insertAdjacentHTML('afterend',
+          `<td class="text-right minimum-amount">${amount}</td>`)
 
-
-      let dot = eventInfo.el.querySelector('.fc-event-dot')
+      const dot = eventInfo.el.querySelector('.fc-event-dot')
       dot.classList.add('payment')
       dot.classList.add(paymentClass)
     },
@@ -243,9 +237,9 @@ $(document).on('turbolinks:load', () => {
   listConfig = { ...baseConfig, ...listConfig }
   calendarConfig = { ...baseConfig, ...calendarConfig }
 
-  window.list = new Calendar(document.querySelector('.list-container'), listConfig)
-  list.render()
+  calendarViews.list = new Calendar(document.querySelector('.list-container'), listConfig)
+  calendarViews.list.render()
 
-  window.calendar = new Calendar(document.querySelector('.calendar-container'), calendarConfig)
-  calendar.render()
+  calendarViews.calendar = new Calendar(document.querySelector('.calendar-container'), calendarConfig)
+  calendarViews.calendar.render()
 })

@@ -1,6 +1,6 @@
 import '@rails/ujs'
 import 'bootstrap'
-import 'data-confirm-modal'
+import dataConfirmModal from 'data-confirm-modal'
 
 dataConfirmModal.setDefaults({
   title: 'Confirm Deletion',
