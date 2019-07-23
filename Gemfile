@@ -77,7 +77,7 @@ group :development, :test do
   gem 'factory_bot_rails'
 
   # Create some fake data for our factories
-  gem 'faker'
+  gem 'faker', '1.9.4'
 
   # Prefer over prettyprint
   gem 'awesome_print'
