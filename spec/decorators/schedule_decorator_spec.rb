@@ -29,7 +29,7 @@ RSpec.describe ScheduleDecorator do
   describe '#frequency' do
     it 'renders frequency as long description from model' do
       schedule.frequency = 'weekly'
-      expect(schedule.frequency).to eq(Schedule.frequencies['weekly'])
+      expect(schedule.frequency).to eq(Schedule.frequencies['weekly'][:description])
     end
   end
 end
