@@ -15,4 +15,10 @@ module SchedulesHelper
                            .map { |k, v| [k, v[:description]] }]
     ]
   end
+
+  def schedule_delete_modal_params
+    { confirm: 'Deleting this schedule will also permanently delete all associated historical ' \
+               'payments. Are you sure you want to delete this schedule?',
+      commit: 'Delete Schedule' }
+  end
 end

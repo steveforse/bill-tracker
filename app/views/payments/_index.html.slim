@@ -23,10 +23,9 @@
                 td.text-right = payment.amount
                 td = payment.comment
                 td.text-nowrap
-                  = button_primary 'Edit', edit_payment_path(payment), 'edit'
-                  = button_danger 'Delete', payment, 'trash',
-                      data: { confirm: 'Are you sure you want to delete this record?' },
-                      method: :delete
+                  = button_primary 'Edit Payment', edit_payment_path(payment), 'edit'
+                  = button_danger 'Delete Payment', payment, 'trash',
+                      data: payment_delete_modal_params, method: :delete
         = paginate  @payments
     - else
       .h5.text-center.p-3 There are currenty no paymens for this schedule.

@@ -24,9 +24,7 @@
       .col-sm-9.offset-sm-3
         = button_primary 'Edit Schedule', edit_schedule_path(@schedule), 'edit'
         = button_danger 'Delete Schedule', @schedule, 'trash',
-          data: { confirm: 'Deleting this schedule will all delete all asociated payments. ' \
-                           'Are you sure you want to delete this schedule?' },
-                  method: :delete
+          data: schedule_delete_modal_params, method: :delete
         = button_cancel payee_path(@schedule.payee), 'Back to Payee Details'
 
 br

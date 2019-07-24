@@ -22,7 +22,7 @@
       .col-sm-9.offset-sm-3
         = button_primary 'Edit Payee', edit_payee_path(@payee), 'edit'
         = button_danger 'Delete Payee', @payee, 'trash',
-            data: payee_delete_button_params,
+            data: payee_delete_modal_params,
             method: :delete
         = button_cancel payees_path, 'Back to Payees List'
 

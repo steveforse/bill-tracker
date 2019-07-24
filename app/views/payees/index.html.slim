@@ -24,7 +24,7 @@
                 td.text-nowrap
                   = button_primary 'Details', payee_path(payee), 'info-circle'
                   = button_danger 'Delete', payee, 'trash',
-                      data: payee_delete_button_params,
+                      data: payee_delete_modal_params,
                       method: :delete
         = paginate @payees
     - else
