@@ -27,7 +27,9 @@ RSpec.describe 'Payees', type: :system do
       click_link 'Delete'
       assert_selector '.modal-content' do
         assert_selector 'h5', text: 'Are you sure?'
-        assert_selector '.modal-body', text: 'Deleting this payee will also permanently delete all associated schedules with their payment histories. Are you sure you want to permanently delete this payee?'
+        assert_selector '.modal-body', text: 'Deleting this payee will also permanently delete ' \
+          'all associated schedules with their payment histories. Are you sure you want to ' \
+          'permanently delete this payee?'
       end
     end
 

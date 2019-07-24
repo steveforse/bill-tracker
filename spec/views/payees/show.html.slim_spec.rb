@@ -82,7 +82,8 @@ RSpec.describe 'payees/show', type: :view do
           assert_select 'td:nth-of-type(1)', text: schedule.name
           assert_select 'td:nth-of-type(2)', text: schedule.start_date.to_s
           assert_select 'td:nth-of-type(3)', text: schedule.end_date.to_s
-          assert_select 'td:nth-of-type(4)', text: Schedule.frequencies[schedule.frequency][:description]
+          assert_select 'td:nth-of-type(4)',
+                        text: Schedule.frequencies[schedule.frequency][:description]
           assert_select 'td:nth-of-type(5)', text: (schedule.autopay ? 'Enabled' : 'Disabled')
           assert_select 'td:nth-of-type(6)', text: number_to_currency(schedule.minimum_payment)
           assert_select 'td:nth-of-type(7)' do

@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe PaymentsController, type: :controller do
-  let (:schedule) { create(:schedule) }
-  let (:payment) { create(:payment, schedule: schedule) }
+  let(:schedule) { create(:schedule) }
+  let(:payment) { create(:payment, schedule: schedule) }
 
   let(:valid_attributes) do
     attributes = attributes_for(:payment, schedule: schedule)
