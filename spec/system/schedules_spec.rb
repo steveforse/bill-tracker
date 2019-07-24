@@ -16,9 +16,10 @@ RSpec.describe 'Schedules', type: :system do
       attributes = attributes_for(:schedule)
 
       expect do
+        fill_in 'Name', with: attributes[:name]
         fill_in 'Start date', with: attributes[:start_date]
         fill_in 'End date', with: attributes[:end_date]
-        select Schedule.frequencies[attributes[:frequency]], from: 'Frequency'
+        select Schedule.frequencies[attributes[:frequency]][:description], from: 'Frequency'
         fill_in 'Minimum payment', with: '100.00'
         find('.toggle.btn').click
         click_button 'Create Schedule'
@@ -26,9 +27,10 @@ RSpec.describe 'Schedules', type: :system do
 
       expect(page).to have_current_path(payee_path(payee.id))
 
+      expect(page).to have_content(attributes[:name])
       expect(page).to have_content(attributes[:start_date])
       expect(page).to have_content(attributes[:end_date])
-      expect(page).to have_content(Schedule.frequencies[attributes[:frequency]])
+      expect(page).to have_content(Schedule.frequencies[attributes[:frequency]][:description])
       expect(page).to have_content('$100.00')
       expect(page).to have_content('Enabled')
     end
@@ -52,14 +54,16 @@ RSpec.describe 'Schedules', type: :system do
       attributes = attributes_for(:schedule)
 
       expect do
+        fill_in 'Start date', with: attributes[:name]
         fill_in 'Start date', with: attributes[:start_date]
         fill_in 'End date', with: attributes[:end_date]
-        select Schedule.frequencies[attributes[:frequency]], from: 'Frequency'
+        select Schedule.frequencies[attributes[:frequency]][:description], from: 'Frequency'
         fill_in 'Minimum payment', with: '100.00'
         find('.toggle.btn').click
         click_button 'Reset Form'
       end.not_to change(Schedule, :count)
 
+      expect(page).not_to have_content(attributes[:name])
       expect(page).not_to have_content(attributes[:start_date])
       expect(page).not_to have_content(attributes[:end_date])
       expect(page).not_to have_content('100.00')
@@ -78,18 +82,20 @@ RSpec.describe 'Schedules', type: :system do
       attributes = attributes_for(:schedule)
 
       expect do
+        fill_in 'Name', with: attributes[:name]
         fill_in 'Start date', with: attributes[:start_date]
         fill_in 'End date', with: attributes[:end_date]
-        select Schedule.frequencies[attributes[:frequency]], from: 'Frequency'
+        select Schedule.frequencies[attributes[:frequency]][:description], from: 'Frequency'
         fill_in 'Minimum payment', with: '100.00'
         click_button 'Update Schedule'
       end.not_to change(Schedule, :count)
 
-      expect(page).to have_current_path(payee_path(payee.id))
+      expect(page).to have_current_path(schedule_path(schedule))
 
+      expect(page).to have_content(attributes[:name])
       expect(page).to have_content(attributes[:start_date])
       expect(page).to have_content(attributes[:end_date])
-      expect(page).to have_content(Schedule.frequencies[attributes[:frequency]])
+      expect(page).to have_content(Schedule.frequencies[attributes[:frequency]][:description])
       expect(page).to have_content('$100.00')
     end
 
@@ -113,12 +119,13 @@ RSpec.describe 'Schedules', type: :system do
       expect do
         fill_in 'Start date', with: attributes[:start_date]
         fill_in 'End date', with: attributes[:end_date]
-        select Schedule.frequencies[attributes[:frequency]], from: 'Frequency'
+        select Schedule.frequencies[attributes[:frequency]][:description], from: 'Frequency'
         fill_in 'Minimum payment', with: '100.00'
         find('.toggle.btn').click
         click_button 'Reset Form'
       end.not_to change(Schedule, :count)
 
+      expect(page).not_to have_content(attributes[:name])
       expect(page).not_to have_content(attributes[:start_date])
       expect(page).not_to have_content(attributes[:end_date])
       expect(page).not_to have_content('100.00')
