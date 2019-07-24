@@ -10,7 +10,7 @@ RSpec.describe 'Payees', type: :system do
 
   let(:payee) { Payee.first }
 
-  describe 'index page' do
+  describe 'index page', js: true do
     before { visit '/payees' }
 
     it 'visits new payee page after clicking "New Payee" button' do
@@ -26,15 +26,15 @@ RSpec.describe 'Payees', type: :system do
     it 'renders confirmation modal after clicking "Delete"' do
       click_link 'Delete'
       assert_selector '.modal-content' do
-        assert_selector 'h5', text: 'Confirm Deletion'
-        assert_selector '.modal-body', text: 'Are you sure you want to delete this payee?'
+        assert_selector 'h5', text: 'Are you sure?'
+        assert_selector '.modal-body', text: 'Deleting this payee will also delete all associated schedules with their payment history. Are you sure you want to delete this payee?'
       end
     end
 
     it 'allows deletes record after confirming at the modal' do
       assert_selector '.card-body .h5', count: 0
       click_link 'Delete'
-      click_button 'Delete Record'
+      click_button 'Delete Payee'
       assert_selector '.card-body .h5', text: 'Create a payee to get started'
     end
 
@@ -54,6 +54,7 @@ RSpec.describe 'Payees', type: :system do
     it 'sorts the columns from header links to descend' do
       %w[name nickname website phone_number].each do |column|
         click_link column.titleize
+        sleep(0.1)
         click_link column.titleize
         expect(page).to have_current_path(payees_path(sort: "#{column}_desc"))
       end
@@ -65,14 +66,14 @@ RSpec.describe 'Payees', type: :system do
 
     before { visit "/payees/#{payee.id}" }
 
-    it 'visits payees edit page after clicking "Edit Details" button' do
-      click_link 'Edit Details'
+    it 'visits payees edit page after clicking "Edit Payee" button' do
+      click_link 'Edit Payee'
       expect(page).to have_current_path(edit_payee_path(payee))
     end
 
     it 'returns to payees index after deleting' do
       click_link 'Delete Payee'
-      click_button 'Delete Record'
+      click_button 'Delete Payee'
       expect(page).to have_current_path(payees_path)
     end
 
@@ -86,18 +87,9 @@ RSpec.describe 'Payees', type: :system do
       expect(page).to have_current_path(new_payee_schedule_path(payee))
     end
 
-    it 'visits schedules edit page after clicking "Edit" button' do
-      click_link 'Edit'
-      expect(page).to have_current_path(edit_schedule_path(schedule))
-    end
-
-    it 'allows deleting of schedule' do
-      assert_selector '.h5', text: 'There are currently no schedules for this payee.', count: 0
-      click_link 'Delete'
-      assert_selector '.modal-content'
-      click_button 'Delete Record'
-      expect(page).to have_current_path(payee_path(payee))
-      assert_selector '.h5', text: 'There are currently no schedules for this payee.', count: 1
+    it 'visits schedules show page after clicking "Details" button' do
+      click_link 'Details'
+      expect(page).to have_current_path(schedule_path(schedule))
     end
   end
 
