@@ -3,6 +3,6 @@ import 'bootstrap'
 import dataConfirmModal from 'data-confirm-modal'
 
 dataConfirmModal.setDefaults({
-  title: 'Confirm Deletion',
+  title: 'Are you sure?',
   commit: 'Delete Record'
 })
