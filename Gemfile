@@ -102,7 +102,10 @@ group :development do
 
   # Other static analsis
   gem 'brakeman'
+  gem 'bundler-audit'
   gem 'rails_best_practices'
+  gem 'reek'
+
   # Spring application pre-loader
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
