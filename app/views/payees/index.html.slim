@@ -19,7 +19,7 @@
               tr
                 td = payee.name
                 td = payee.nickname
-                td = payee.website
+                td = sanitize payee.website
                 td = payee.phone_number
                 td.text-nowrap
                   = button_primary 'Details', payee_path(payee), 'info-circle'

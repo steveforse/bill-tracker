@@ -10,7 +10,7 @@
       .col-sm-9.form-control-plaintext = @payee.nickname
     .form-group.row
       .col-sm-3.col-form-label = Payee.human_attribute_name('website')
-      .col-sm-9.form-control-plaintext = @payee.website
+      .col-sm-9.form-control-plaintext = sanitize @payee.website
     .form-group.row
       .col-sm-3.col-form-label = Payee.human_attribute_name('phone_number')
       .col-sm-9.form-control-plaintext = @payee.phone_number
