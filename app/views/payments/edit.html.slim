@@ -3,5 +3,5 @@
     .d-flex
       .h4 Payment
   .card-body
-    == render 'form'
+    == render partial: 'form', locals: { payment: @payment, schedule: @schedule }
 

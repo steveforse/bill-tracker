@@ -57,4 +57,8 @@ module ApplicationHelper
       end
     end
   end
+
+  def kaminari_page_taggable?(page)
+    page.left_outer? || page.right_outer? || page.inside_window?
+  end
 end

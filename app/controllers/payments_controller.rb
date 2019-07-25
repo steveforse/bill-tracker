@@ -32,8 +32,7 @@ class PaymentsController < ApplicationController
   # POST /payments.json
   # rubocop: disable Metrics/AbcSize
   def create
-    @payment = Payment.new(payment_params)
-    @payment.schedule_id = @schedule.id
+    @payment = Payment.new(payment_params).tap { |payment| payment.schedule_id = @schedule.id }
 
     respond_to do |format|
       if @payment.save

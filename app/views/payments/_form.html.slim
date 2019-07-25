@@ -1,4 +1,4 @@
-= simple_form_for([@schedule, @payment], wrapper: :horizontal_form) do |f|
+= simple_form_for([schedule, payment], wrapper: :horizontal_form) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
@@ -14,5 +14,5 @@
       .col-sm-9.offset-sm-3
         = f.button :submit, class: 'btn-primary'
         = button_reset
-        = button_cancel @payment.schedule, 'Back to Schedule'
+        = button_cancel payment.schedule, 'Back to Schedule'
 

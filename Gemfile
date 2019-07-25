@@ -100,6 +100,9 @@ group :development do
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
 
+  # Other static analsis
+  gem 'brakeman'
+  gem 'rails_best_practices'
   # Spring application pre-loader
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'

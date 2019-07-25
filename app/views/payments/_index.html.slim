@@ -2,10 +2,10 @@
   .card-header
     .d-flex
       .h4.mr-auto Payments
-      = button_success 'New Payment', new_schedule_payment_path(@schedule), 'plus'
+      = button_success 'New Payment', new_schedule_payment_path(schedule), 'plus'
 
   .card-body.p-0
-    - if @payments.any?
+    - if payments.any?
       .table-responsive
         table.table.table-striped.table-bordered.table-hover.table-sm
           thead.thead-light
@@ -16,7 +16,7 @@
               th = sortable 'Comment', :comment
               th Actions
           tbody
-            - @payments.each do |payment|
+            - payments.each do |payment|
               tr
                 td = payment.date
                 td = payment.due_date
@@ -26,7 +26,7 @@
                   = button_primary 'Edit Payment', edit_payment_path(payment), 'edit'
                   = button_danger 'Delete Payment', payment, 'trash',
                       data: payment_delete_modal_params, method: :delete
-        = paginate  @payments
+        = paginate  payments
     - else
       .h5.text-center.p-3 There are currenty no paymens for this schedule.
 

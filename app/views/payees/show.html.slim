@@ -28,4 +28,4 @@
 
 br
 
-= render 'schedules/index'
+= render partial: 'schedules/index', locals: { payee: @payee, schedules: @schedules }

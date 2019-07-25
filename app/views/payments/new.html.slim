@@ -3,5 +3,5 @@
     .d-felx
       .h4 New Payment
   .card-body
-    == render 'form'
+    == render partial: 'form', locals: { payment: @payment, schedule: @schedule }
 

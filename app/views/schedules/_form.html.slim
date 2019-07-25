@@ -1,4 +1,4 @@
-= simple_form_for([@payee, @schedule]) do |f|
+= simple_form_for([payee, schedule]) do |f|
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
   .form-inputs
@@ -21,5 +21,5 @@
       .col-sm-9.offset-sm-3
         = f.button :submit, class: 'btn-primary'
         = button_reset
-        = button_cancel @schedule.payee, 'Back to Payee'
+        = button_cancel schedule.payee, 'Back to Payee'
 

@@ -3,5 +3,5 @@
     .d-felx
       .h4 New Payee
   .card-body
-    == render 'form'
+    == render partial: 'form', locals: { payee: @payee }
 

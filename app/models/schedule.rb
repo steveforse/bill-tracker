@@ -11,7 +11,7 @@ class Schedule < ApplicationRecord
   # Validations
   validates :name, presence: true
   validates :start_date, presence: true, date: true,
-                         format: { with: %r{\d*/(0[1-9]|1[0-9]|2[0-8])/\d*},
+                         format: { with: %r{\A\d*/(0[1-9]|1[0-9]|2[0-8])/\d*\z},
                                    message: 'must be on or before the 28th' }
   validates :end_date, date: { after: :start_date, allow_blank: true }
   validates :frequency, inclusion: { in: ->(_a) { frequencies.keys },
@@ -36,11 +36,6 @@ class Schedule < ApplicationRecord
       'annually' => { description: 'Once every year', frequency: 'yearly', interval: 1 },
       'semiannually' => { description: 'Twice every year', frequency: 'yearly', interval: 1 }
     }.freeze
-  end
-
-  def due_dates(calendar_start_date, calendar_end_date)
-    rule = RRule::Rule.new(rrule_string)
-    rule.between(calendar_start_date, calendar_end_date)
   end
 
   def rrule_string

@@ -24,16 +24,13 @@ class SchedulesController < ApplicationController
   end
 
   # GET /schedules/1/edit
-  def edit
-    @schedule.start_date = l @schedule.start_date if @schedule.start_date
-    @schedule.end_date = l @schedule.end_date if @schedule.end_date
-  end
+  def edit; end
 
   # POST /schedules
   # POST /schedules.json
+  # rubocop: disable Metrics/AbcSize
   def create
-    @schedule = Schedule.new(schedule_params)
-    @schedule.payee_id = @payee.id
+    @schedule = Schedule.new(schedule_params).tap { |schedule| schedule.payee_id = @payee.id }
 
     respond_to do |format|
       if @schedule.save
@@ -45,6 +42,7 @@ class SchedulesController < ApplicationController
       end
     end
   end
+  # rubocop: enable Metrics/AbcSize
 
   # PATCH/PUT /schedules/1
   # PATCH/PUT /schedules/1.json

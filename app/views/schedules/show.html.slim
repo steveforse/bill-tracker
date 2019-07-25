@@ -29,4 +29,4 @@
 
 br
 
-= render 'payments/index'
+= render partial: 'payments/index', locals: { payments: @payments, schedule: @schedule }

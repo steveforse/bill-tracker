@@ -124,6 +124,7 @@ GEM
       debug_inspector (>= 0.0.1)
     bootsnap (1.4.4)
       msgpack (~> 1.0)
+    brakeman (4.6.1)
     builder (3.2.3)
     bullet (6.0.1)
       activesupport (>= 3.0.0)
@@ -140,6 +141,8 @@ GEM
       xpath (~> 3.2)
     childprocess (1.0.1)
       rake (< 13.0)
+    code_analyzer (0.4.8)
+      sexp_processor
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
     crass (1.0.4)
@@ -156,6 +159,7 @@ GEM
       request_store (>= 1.0)
     equatable (0.6.1)
     erubi (1.8.0)
+    erubis (2.7.0)
     factory_bot (5.0.2)
       activesupport (>= 4.2.0)
     factory_bot_rails (5.0.2)
@@ -176,6 +180,7 @@ GEM
     jaro_winkler (1.5.3)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
+    json (2.2.0)
     kaminari (1.1.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.1.1)
@@ -247,6 +252,14 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
+    rails_best_practices (1.19.4)
+      activesupport
+      code_analyzer (>= 0.4.8)
+      erubis
+      i18n
+      json
+      require_all (~> 2.0)
+      ruby-progressbar
     railties (6.0.0.rc2)
       actionpack (= 6.0.0.rc2)
       activesupport (= 6.0.0.rc2)
@@ -261,6 +274,7 @@ GEM
     regexp_parser (1.6.0)
     request_store (1.4.1)
       rack (>= 1.4)
+    require_all (2.0.0)
     rrule (0.4.2)
       activesupport (>= 4.1)
     rubocop (0.73.0)
@@ -294,6 +308,7 @@ GEM
     selenium-webdriver (3.142.3)
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
+    sexp_processor (4.12.1)
     shoulda-matchers (4.1.1)
       activesupport (>= 4.2.0)
     simple_form (4.1.0)
@@ -374,6 +389,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootsnap (>= 1.4.2)
+  brakeman
   bullet
   byebug
   capybara (>= 2.15)
@@ -388,6 +404,7 @@ DEPENDENCIES
   meta_request
   puma (~> 3.11)
   rails (~> 6.0.0.rc1)
+  rails_best_practices
   rezort!
   rrule
   rspec-core!

@@ -2,10 +2,10 @@
   .card-header
     .d-flex
       .h4.mr-auto Schedules
-      = button_success 'New Schedule', new_payee_schedule_path(@payee), 'plus'
+      = button_success 'New Schedule', new_payee_schedule_path(payee), 'plus'
 
   .card-body.p-0
-    - if @schedules.any?
+    - if schedules.any?
       .table-responsive
         table.table.table-striped.table-bordered.table-hover.table-sm
           thead.thead-light
@@ -18,7 +18,7 @@
               th = sortable 'Minimum Payment', :minimum_payment
               th Actions
           tbody
-            - @schedules.each do |schedule|
+            - schedules.each do |schedule|
               tr
                 td = schedule.name
                 td = schedule.start_date
@@ -28,7 +28,7 @@
                 td.text-right = schedule.minimum_payment
                 td.text-nowrap
                   = button_primary 'Details', schedule_path(schedule), 'info-circle'
-        = paginate @schedules
+        = paginate schedules
     - else
       .h5.text-center.p-3 There are currently no schedules for this payee.
 

@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   resources :payees do
     resources :schedules, shallow: true, except: %i[index] do
-      resources :payments, shallow: true
+      resources :payments, shallow: true, except: :index
     end
   end
 
