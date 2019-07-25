@@ -23,14 +23,6 @@ RSpec.describe PaymentsController, type: :controller do
   # PaymentsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe 'GET #show' do
-    it 'returns a success response' do
-      payment = Payment.create! valid_attributes
-      get :show, params: { id: payment.to_param }, session: valid_session
-      expect(response).to be_successful
-    end
-  end
-
   describe 'GET #new' do
     it 'returns a success response' do
       get :new, params: { schedule_id: payment.schedule.to_param }, session: valid_session

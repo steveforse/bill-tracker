@@ -8,17 +8,6 @@ class PaymentsController < ApplicationController
     convert_to_sql_dates(%i[date due_date])
   end
 
-  # GET /payments
-  # GET /payments.json
-  def index
-    @schedule = Schedule.find(params[:schedule_id])
-    @payments = @schedule.payments
-  end
-
-  # GET /payments/1
-  # GET /payments/1.json
-  def show; end
-
   # GET /payments/new
   def new
     @payment = Payment.new
