@@ -9,7 +9,7 @@ RSpec.describe PaymentDecorator do
 
   describe '#amount' do
     it 'renders amount as currency' do
-      payment.amount= 42.3
+      payment.amount = 42.3
       expect(payment.amount).to eq('$42.30')
     end
   end
