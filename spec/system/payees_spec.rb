@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Payees', type: :system do
   before do
-    driven_by(:selenium_chrome_headless)
     create(:schedule)
   end
 
