@@ -17,10 +17,10 @@ RSpec.describe 'schedules/edit', type: :view do
         assert_select 'label', text: 'Name *'
         assert_select 'input[name="schedule[name]"]'
 
-        assert_select 'label', text: 'Start date *'
+        assert_select 'label', text: 'Start Date *'
         assert_select 'input[name="schedule[start_date]"]'
 
-        assert_select 'label', text: 'End date'
+        assert_select 'label', text: 'End Date'
         assert_select 'input[name="schedule[end_date]"]'
 
         assert_select 'label', text: 'Frequency'
@@ -29,7 +29,7 @@ RSpec.describe 'schedules/edit', type: :view do
           assert_select 'option', count: 9
         end
 
-        assert_select 'label', text: 'Minimum payment'
+        assert_select 'label', text: 'Minimum Payment'
         assert_select 'input[type=number][name="schedule[minimum_payment]"]'
 
         assert_select 'label', text: 'Frequency'

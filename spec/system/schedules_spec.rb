@@ -17,10 +17,10 @@ RSpec.describe 'Schedules', type: :system do
 
       expect do
         fill_in 'Name', with: attributes[:name]
-        fill_in 'Start date', with: attributes[:start_date]
-        fill_in 'End date', with: attributes[:end_date]
+        fill_in 'Start Date', with: attributes[:start_date]
+        fill_in 'End Date', with: attributes[:end_date]
         select Schedule.frequencies[attributes[:frequency]][:description], from: 'Frequency'
-        fill_in 'Minimum payment', with: '100.00'
+        fill_in 'Minimum Payment', with: '100.00'
         find('.toggle.btn').click
         click_button 'Create Schedule'
       end.to change(Schedule, :count).by(1)
@@ -37,11 +37,11 @@ RSpec.describe 'Schedules', type: :system do
 
     it 'shows errors when submitted with invalid values' do
       expect do
-        fill_in 'Start date', with: ''
+        fill_in 'Start Date', with: ''
         click_button 'Create Schedule'
       end.not_to change(Schedule, :count)
 
-      expect(page).to have_content("Start date can't be blank")
+      expect(page).to have_content("Start Date can't be blank")
       expect(page).to have_content('Frequency must be from dropdown list')
     end
 
@@ -54,11 +54,11 @@ RSpec.describe 'Schedules', type: :system do
       attributes = attributes_for(:schedule)
 
       expect do
-        fill_in 'Start date', with: attributes[:name]
-        fill_in 'Start date', with: attributes[:start_date]
-        fill_in 'End date', with: attributes[:end_date]
+        fill_in 'Name', with: attributes[:name]
+        fill_in 'Start Date', with: attributes[:start_date]
+        fill_in 'End Date', with: attributes[:end_date]
         select Schedule.frequencies[attributes[:frequency]][:description], from: 'Frequency'
-        fill_in 'Minimum payment', with: '100.00'
+        fill_in 'Minimum Payment', with: '100.00'
         find('.toggle.btn').click
         click_button 'Reset Form'
       end.not_to change(Schedule, :count)
@@ -83,10 +83,10 @@ RSpec.describe 'Schedules', type: :system do
 
       expect do
         fill_in 'Name', with: attributes[:name]
-        fill_in 'Start date', with: attributes[:start_date]
-        fill_in 'End date', with: attributes[:end_date]
+        fill_in 'Start Date', with: attributes[:start_date]
+        fill_in 'End Date', with: attributes[:end_date]
         select Schedule.frequencies[attributes[:frequency]][:description], from: 'Frequency'
-        fill_in 'Minimum payment', with: '100.00'
+        fill_in 'Minimum Payment', with: '100.00'
         click_button 'Update Schedule'
       end.not_to change(Schedule, :count)
 
@@ -101,11 +101,11 @@ RSpec.describe 'Schedules', type: :system do
 
     it 'displays an error message for invalid values' do
       expect do
-        fill_in 'Start date', with: ''
+        fill_in 'Start Date', with: ''
         click_button 'Update Schedule'
       end.not_to change(Schedule, :count)
 
-      expect(page).to have_content("Start date can't be blank")
+      expect(page).to have_content("Start Date can't be blank")
     end
 
     it 'returns to payee details when clicking "Back to Payee" button' do
@@ -117,10 +117,10 @@ RSpec.describe 'Schedules', type: :system do
       attributes = attributes_for(:schedule)
 
       expect do
-        fill_in 'Start date', with: attributes[:start_date]
-        fill_in 'End date', with: attributes[:end_date]
+        fill_in 'Start Date', with: attributes[:start_date]
+        fill_in 'End Date', with: attributes[:end_date]
         select Schedule.frequencies[attributes[:frequency]][:description], from: 'Frequency'
-        fill_in 'Minimum payment', with: '100.00'
+        fill_in 'Minimum Payment', with: '100.00'
         find('.toggle.btn').click
         click_button 'Reset Form'
       end.not_to change(Schedule, :count)
