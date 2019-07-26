@@ -10,4 +10,10 @@ FactoryBot.define do
     minimum_payment { Faker::Number.decimal(4, 2) }
     payee
   end
+
+  trait :with_payments do
+    after(:create) do |instance|
+      create_list :payment, 2, schedule: instance
+    end
+  end
 end
