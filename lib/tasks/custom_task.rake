@@ -23,9 +23,9 @@ end
 
 task :test do
   Rake::Task['brakeman:run'].invoke
+  sh 'bundle audit check --update'
   Rake::Task['bundle:audit'].invoke
   Rake::Task['reek'].invoke
   Rake::Task['rubocop'].invoke
   Rake::Task['spec'].invoke
 end
-
