@@ -62,7 +62,7 @@ RSpec.describe 'Payees', type: :system do
     end
   end
 
-  describe 'show page' do
+  describe 'show page', js: true do
     let(:schedule) { payee.schedules.first }
 
     before { visit "/payees/#{payee.id}" }

@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Schedules', type: :system do
   let(:payee) { create(:payee) }
 
-  describe 'new page' do
+  describe 'new page', js: true do
     before { visit "/payees/#{payee.id}/schedules/new" }
 
     it 'creates a new schedule with valid values' do
@@ -66,7 +66,7 @@ RSpec.describe 'Schedules', type: :system do
     end
   end
 
-  describe 'edit page' do
+  describe 'edit page', js: true do
     before do
       schedule = create(:schedule, payee: payee)
       visit "/schedules/#{schedule.id}/edit"

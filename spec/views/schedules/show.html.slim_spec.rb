@@ -36,33 +36,33 @@ RSpec.describe 'schedules/show', type: :view do
 
       assert_select '.row:nth-of-type(4) .col-form-label', text: 'Frequency'
       assert_select '.row:nth-of-type(4) .form-control-plaintext',
-        text: Schedule.frequencies[schedule.frequency][:description]
+                    text: Schedule.frequencies[schedule.frequency][:description]
 
       assert_select '.row:nth-of-type(5) .col-form-label', text: 'Autopay'
       assert_select '.row:nth-of-type(5) .form-control-plaintext',
-        text: (schedule.autopay? ? 'Enabled' : 'Disabled')
+                    text: (schedule.autopay? ? 'Enabled' : 'Disabled')
 
       assert_select '.row:nth-of-type(6) .col-form-label', text: 'Minimum Payment'
       assert_select '.row:nth-of-type(6) .form-control-plaintext',
-        text: number_to_currency(schedule.minimum_payment)
+                    text: number_to_currency(schedule.minimum_payment)
     end
   end
 
   it 'renders schedule action buttons' do
     assert_select '.card-body .row:nth-of-type(7)' do
       assert_select "a.btn.btn-primary[href='/schedules/#{schedule.id}/edit']",
-        text: 'Edit Schedule'
+                    text: 'Edit Schedule'
       assert_select "a.btn.btn-danger[href='/schedules/#{schedule.id}'][data-method=delete]",
                     text: 'Delete Schedule'
       assert_select "a.btn.btn-outline-secondary[href='/payees/#{schedule.payee.id}']",
-        text: 'Back to Payee Details'
+                    text: 'Back to Payee Details'
     end
   end
 
   it 'renders payments card header' do
     assert_select '.card-header .h4', text: 'Payments'
     assert_select ".card-header a[href='/schedules/#{schedule.id}/payments/new']",
-      text: 'New Payment'
+                  text: 'New Payment'
   end
 
   it 'renders payments table header' do
@@ -88,9 +88,9 @@ RSpec.describe 'schedules/show', type: :view do
           assert_select 'td:nth-of-type(4)', text: payment.comment
           assert_select 'td:nth-of-type(5)' do
             assert_select "a.btn.btn-primary[href='/payments/#{payment.id}/edit']",
-              text: 'Edit Payment'
+                          text: 'Edit Payment'
             assert_select "a.btn.btn-danger[href='/payments/#{payment.id}'][data-method=delete]",
-              text: 'Delete Payment'
+                          text: 'Delete Payment'
           end
         end
       end
