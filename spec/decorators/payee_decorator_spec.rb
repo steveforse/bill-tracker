@@ -13,6 +13,11 @@ RSpec.describe PayeeDecorator do
       payee.website = url
       expect(payee.website).to have_link(href: url, exact_text: url)
     end
+    it 'returns empty string if url is blank' do
+      url = ''
+      payee.website = url
+      expect(payee.website).not_to have_link(href: url, exact_text: url)
+    end
   end
 
   describe '#phone_number' do
@@ -21,6 +26,12 @@ RSpec.describe PayeeDecorator do
       payee.phone_number = phone_number
       expect(payee.phone_number).to have_link(href: ('tel:' + phone_number),
                                               exact_text: phone_number)
+    end
+    it 'returns empty string if phone number is blank' do
+      phone_number = ''
+      payee.phone_number = phone_number
+      expect(payee.phone_number).not_to have_link(href: ('tel:' + phone_number),
+                                                  exact_text: phone_number)
     end
   end
 end
