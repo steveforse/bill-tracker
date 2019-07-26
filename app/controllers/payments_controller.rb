@@ -3,7 +3,7 @@
 # Handles creation of payments
 class PaymentsController < ApplicationController
   before_action :set_schedule, only: %i[new create]
-  before_action :set_payment, only: %i[show edit update destroy]
+  before_action :set_payment, only: %i[edit update destroy]
   before_action only: %i[update create] do
     convert_to_sql_dates(%i[date due_date])
   end
