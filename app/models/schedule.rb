@@ -17,7 +17,6 @@ class Schedule < ApplicationRecord
   validates :frequency, inclusion: { in: ->(_a) { frequencies.keys },
                                      message: 'must be from dropdown list' }
   validates :payee_id, presence: true, numericality: { only_integer: true }
-  validate :associated_payee_exists
 
   def self.frequencies
     { # Week-based frequencies
@@ -81,9 +80,5 @@ class Schedule < ApplicationRecord
     start_month = start_date.month
     match_month = start_month > 6 ? start_month - 6 : start_month + 6
     "BYMONTH=#{start_month},#{match_month}"
-  end
-
-  def associated_payee_exists
-    errors.add(:payee_id, 'must be an existing payee') unless Payee.exists? payee_id
   end
 end
