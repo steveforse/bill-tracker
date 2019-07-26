@@ -56,9 +56,10 @@ RSpec.describe PaymentsController, type: :controller do
 
     context 'with invalid params' do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: { schedule_id: schedule.to_param,
-                                payment: invalid_attributes }, session: valid_session
-        expect(response).to be_successful
+        expect do
+          post :create, params: { schedule_id: schedule.to_param,
+                                  payment: invalid_attributes }, session: valid_session
+        end.not_to change(Payment, :count)
       end
     end
   end
