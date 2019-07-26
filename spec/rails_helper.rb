@@ -65,6 +65,17 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Ensures all non-javascript tests will use the faster :rack_test
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
+
+  # Ensures that all javascript tests use :headless_chrome
+  config.before(:each, type: :system, js: true) do
+    # Can be switched to :chrome if you want to see it working
+    driven_by :selenium_chrome_headless
+  end
 end
 
 Shoulda::Matchers.configure do |config|
