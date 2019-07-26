@@ -2,6 +2,8 @@
 
 # Payment model
 class Payment < ApplicationRecord
+  strip_attributes
+
   # Relations
   belongs_to :schedule
 
