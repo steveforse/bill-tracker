@@ -13,7 +13,8 @@
                           label_method: :last,
                           value_method: :first
 
-    = f.input :minimum_payment, wrapper: :horizontal_input_group, prepend: icon('dollar-sign')
+    = f.input :minimum_payment, wrapper: :horizontal_input_group, prepend: icon('dollar-sign'),
+      input_html: { value: number_with_precision(f.object.minimum_payment, precision: 2) }
     = f.input :autopay
 
   .form-actions
@@ -21,5 +22,8 @@
       .col-sm-9.offset-sm-3
         = f.button :submit, class: 'btn-primary'
         = button_reset
-        = button_cancel schedule.payee, 'Back to Payee'
+        - if schedule.persisted?
+          = button_cancel schedule, 'Back to Schedule Details'
+        - else
+          = button_cancel payee, 'Back to Payee Details'
 
