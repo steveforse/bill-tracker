@@ -1,3 +1,7 @@
+- if schedule.autopay?
+  .alert.alert-warning
+    | This schedule is currently configured for autopay. Automatic payment will be skipped for
+     due date if a manual payment is created.
 = simple_form_for([schedule, payment], wrapper: :horizontal_form) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
@@ -6,7 +10,14 @@
     = f.input :date, append: icon('calendar-alt')
     = f.input :due_date, append: icon('calendar-alt'),
                          input_html: { data: { rrule: f.object.schedule.rrule_string } }
-    = f.input :amount, wrapper: :horizontal_input_group, prepend: icon('dollar-sign')
+    - if schedule.minimum_payment.present?
+      .form-group.row.m-0.p-0
+        .offset-sm-3.col-sm-9
+          small
+            ' Minimum Payment for this schedule is:
+            = number_to_currency(schedule.minimum_payment)
+    = f.input :amount, wrapper: :horizontal_input_group, prepend: icon('dollar-sign'),
+      input_html: {value: number_with_precision(f.object.amount, precision: 2) }
     = f.input :comment
 
   .form-actions
