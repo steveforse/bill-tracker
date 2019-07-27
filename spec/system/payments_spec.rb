@@ -69,7 +69,7 @@ RSpec.describe 'Payments', type: :system do
     end
 
     it 'updates a  payment with valid values' do
-      attributes = attributes_for(:payment, schedule: schedule)
+      attributes = attributes_for(:payment, schedule: payment.schedule)
 
       expect do
         fill_in 'Date', with: attributes[:date], match: :prefer_exact
