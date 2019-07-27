@@ -31,6 +31,52 @@ RSpec.describe Schedule, type: :model do
     end
   end
 
+  describe 'custom validators' do
+    let(:schedule) { create(:schedule) }
+
+    describe '#autopay_requires_minimum_payment' do
+      it 'does not require minimum payment if autopay is not set' do
+        schedule.autopay = false
+        schedule.minimum_payment = nil
+        expect(schedule.valid?).to be true
+      end
+
+      it 'require minimum payment if autopay is set' do
+        schedule.autopay = true
+        schedule.minimum_payment = nil
+        schedule.valid?
+        expect(schedule.errors.messages[:autopay]).to \
+          include('requires a value for minimum payment')
+      end
+    end
+
+    describe '#cannot_modify_start_date_when_payments_exist' do
+      it 'can have start_date modified if there are no payments' do
+        schedule.payments = []
+        schedule.start_date = schedule.start_date + 1.day
+        expect(schedule.valid?).to be true
+      end
+
+      it 'cannot have start_date modified if there are  payments' do
+        schedule.payments << create(:payment, schedule: schedule)
+        schedule.start_date = schedule.start_date + 1.day
+        schedule.valid?
+        expect(schedule.errors.messages[:start_date]).to \
+          include('cannot be changed if payments exist')
+      end
+    end
+
+    describe '#end_date_must_be_after_last_payment' do
+      it 'cannot have end_date after last payment' do
+        payment = create(:payment, due_date: (schedule.start_date + 1.month), schedule: schedule)
+        schedule.end_date = payment.due_date - 1.day
+        schedule.valid?
+        expect(schedule.errors.messages[:end_date]).to \
+          include('must be after last payment due date')
+      end
+    end
+  end
+
   describe 'self.frequencies' do
     %w[weekly biweekly quadweekly monthly bimonthly semimonthly trimonthly
        annually semiannually].each do |frequency|
