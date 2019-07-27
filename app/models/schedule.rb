@@ -24,21 +24,22 @@ class Schedule < ApplicationRecord
   validate :autopay_requires_minimum_payment
 
   def autopay_requires_minimum_payment
-    if autopay? && minimum_payment.blank?
-      erros.add(:autopay, 'requires a value for minimum payment')
-    end
+    return if minimum_payment.present? || !autopay?
+
+    errors.add(:autopay, 'requires a value for minimum payment')
   end
 
   def cannot_modify_start_date_when_payments_exist
-    if start_date_was != start_date &&  payments.any?
-      errors.add(:start_date, "cannot be changed if payments exist")
-    end
+    return if payments.empty? || start_date_was == start_date
+
+    errors.add(:start_date, 'cannot be changed if payments exist')
   end
 
   def end_date_must_be_after_last_payment
-    if end_date.present? && end_date < payments.order(due_date: :desc).first.due_date
-      errors.add(:end_date, "must be after last payment due date")
-    end
+    return if end_date.blank? || payments.empty? || (
+      end_date > payments.order(due_date: :desc).first.due_date)
+
+    errors.add(:end_date, 'must be after last payment due date')
   end
 
   def self.frequencies
@@ -61,7 +62,7 @@ class Schedule < ApplicationRecord
   end
 
   def rrule_string
-    [rrule_dtstart, rrule_dtend, rrule_frequency, rrule_interval, rrule_semimonthly_bymonthdays,
+    [rrule_dtstart, rrule_until, rrule_frequency, rrule_interval, rrule_semimonthly_bymonthdays,
      rrule_semiannually_bymonth].compact.join(';')
   end
 
@@ -71,10 +72,10 @@ class Schedule < ApplicationRecord
     "DTSTART=#{rrule_date_format(start_date)}"
   end
 
-  def rrule_dtend
+  def rrule_until
     return nil if end_date.blank?
 
-    "DTEND=#{rrule_date_format(end_date)}"
+    "UNTIL=#{rrule_date_format(end_date)}"
   end
 
   def rrule_date_format(date)
