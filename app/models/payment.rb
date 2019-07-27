@@ -14,15 +14,18 @@ class Payment < ApplicationRecord
   validates :amount, presence: true, numericality: { greater_than: 0 }
 
   # Custom validator
-  validate :due_date_between_schedule_start_and_end_dates
+  validate :due_date_after_start_date
+  validate :due_date_before_end_date
 
-  # rubocop: disable Metrics/AbcSize
-  def due_date_between_schedule_start_and_end_dates
-    return if schedule.blank? || due_date.blank? ||
-              (due_date >= schedule.start_date && schedule.end_date.nil?) ||
-              due_date.between?(schedule.start_date, schedule.end_date)
+  def due_date_after_start_date
+    return if !schedule || !due_date || due_date >= schedule.start_date
 
-    errors.add(:due_date, 'must be between schedule start and end dates')
+    errors.add(:due_date, 'must be after schedule start date')
   end
-  # rubocop: enable Metrics/AbcSize
+
+  def due_date_before_end_date
+    return if !schedule || !due_date || schedule.end_date.blank? || due_date <= schedule.end_date
+
+    errors.add(:due_date, 'must be before schedule end date')
+  end
 end
