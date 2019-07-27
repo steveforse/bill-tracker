@@ -40,8 +40,8 @@ RSpec.describe 'schedules/edit', type: :view do
       assert_select 'div.form-actions', count: 1 do
         assert_select 'input.btn.btn-primary[type=submit][value="Update Schedule"]', count: 1
         assert_select 'button.btn.btn-outline-secondary[type=reset]', text: 'Reset Form', count: 1
-        assert_select "a.btn.btn-outline-secondary[href='/payees/#{schedule.payee.id}']",
-                      text: 'Back to Payee', count: 1
+        assert_select "a.btn.btn-outline-secondary[href='/schedules/#{schedule.id}']",
+                      text: 'Back to Schedule Details', count: 1
       end
     end
   end

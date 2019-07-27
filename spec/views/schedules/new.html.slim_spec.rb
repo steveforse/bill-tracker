@@ -42,7 +42,7 @@ RSpec.describe 'schedules/new', type: :view do
         assert_select 'input.btn.btn-primary[type=submit][value="Create Schedule"]', count: 1
         assert_select 'button.btn.btn-outline-secondary[type=reset]', text: 'Reset Form', count: 1
         assert_select "a.btn.btn-outline-secondary[href='/payees/#{schedule.payee.id}']",
-                      text: 'Back to Payee', count: 1
+                      text: 'Back to Payee Details', count: 1
       end
     end
   end
