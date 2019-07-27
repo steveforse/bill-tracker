@@ -1,4 +1,4 @@
-- if schedule.autopay?
+- if payment.schedule.autopay?
   .alert.alert-warning
     | This schedule is currently configured for autopay. Automatic payment will be skipped for
      due date if a manual payment is created.
@@ -10,12 +10,12 @@
     = f.input :date, append: icon('calendar-alt')
     = f.input :due_date, append: icon('calendar-alt'),
                          input_html: { data: { rrule: f.object.schedule.rrule_string } }
-    - if schedule.minimum_payment.present?
+    - if payment.schedule.minimum_payment.present?
       .form-group.row.m-0.p-0
         .offset-sm-3.col-sm-9
           small
             ' Minimum Payment for this schedule is:
-            = number_to_currency(schedule.minimum_payment)
+            = number_to_currency(payment.schedule.minimum_payment)
     = f.input :amount, wrapper: :horizontal_input_group, prepend: icon('dollar-sign'),
       input_html: {value: number_with_precision(f.object.amount, precision: 2) }
     = f.input :comment
