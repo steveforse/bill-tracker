@@ -58,7 +58,7 @@ RSpec.describe Schedule, type: :model do
         schedule.frequency = frequency
         expect(schedule.rrule_string)
           .to include("DTSTART=#{schedule.start_date.strftime('%Y%m%dT%H%M%S')}")
-          .and include("DTEND=#{schedule.end_date.strftime('%Y%m%dT%H%M%S')}")
+          .and include("UNTIL=#{schedule.end_date.strftime('%Y%m%dT%H%M%S')}")
           .and include("FREQ=#{Schedule.frequencies[schedule.frequency][:frequency].upcase}")
           .and include("INTERVAL=#{Schedule.frequencies[schedule.frequency][:interval]}")
       end
@@ -67,7 +67,7 @@ RSpec.describe Schedule, type: :model do
       it 'skips end_date if not set' do
         schedule.frequency = frequency
         schedule.end_date = nil
-        expect(schedule.rrule_string).not_to include('DTEND=')
+        expect(schedule.rrule_string).not_to include('UNTIL=')
       end
     end
 
@@ -76,7 +76,7 @@ RSpec.describe Schedule, type: :model do
       schedule.frequency = 'semimonthly'
       expect(schedule.rrule_string)
         .to include("DTSTART=#{schedule.start_date.strftime('%Y%m%dT%H%M%S')}")
-        .and include("DTEND=#{schedule.end_date.strftime('%Y%m%dT%H%M%S')}")
+        .and include("UNTIL=#{schedule.end_date.strftime('%Y%m%dT%H%M%S')}")
         .and include("FREQ=#{Schedule.frequencies[schedule.frequency][:frequency].upcase}")
         .and include("INTERVAL=#{Schedule.frequencies[schedule.frequency][:interval]}")
         .and include("BYMONTHDAY=#{schedule.start_date.day},")
@@ -86,7 +86,7 @@ RSpec.describe Schedule, type: :model do
       schedule.frequency = 'semiannually'
       expect(schedule.rrule_string)
         .to include("DTSTART=#{schedule.start_date.strftime('%Y%m%dT%H%M%S')}")
-        .and include("DTEND=#{schedule.end_date.strftime('%Y%m%dT%H%M%S')}")
+        .and include("UNTIL=#{schedule.end_date.strftime('%Y%m%dT%H%M%S')}")
         .and include("FREQ=#{Schedule.frequencies[schedule.frequency][:frequency].upcase}")
         .and include("INTERVAL=#{Schedule.frequencies[schedule.frequency][:interval]}")
         .and include("BYMONTH=#{schedule.start_date.month},")
