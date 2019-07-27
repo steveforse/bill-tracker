@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :schedule do
     name { Faker::Commerce.product_name }
     start_date { Faker::Date.between(1.year.ago, Time.zone.today).change(day: rand(1..28)) }
-    end_date { Faker::Date.between(Date.tomorrow, 1.year.from_now) }
+    end_date { Faker::Date.between((start_date + 3.months), 1.year.from_now) }
     frequency { Schedule.frequencies.keys.sample }
     autopay { Faker::Boolean.boolean }
     minimum_payment { Faker::Number.decimal(4, 2) }
