@@ -18,6 +18,29 @@ class Schedule < ApplicationRecord
                                      message: 'must be from dropdown list' }
   validates :payee_id, presence: true, numericality: { only_integer: true }
 
+  # Custom validators
+  validate :cannot_modify_start_date_when_payments_exist
+  validate :end_date_must_be_after_last_payment
+  validate :autopay_requires_minimum_payment
+
+  def autopay_requires_minimum_payment
+    if autopay? && minimum_payment.blank?
+      erros.add(:autopay, 'requires a value for minimum payment')
+    end
+  end
+
+  def cannot_modify_start_date_when_payments_exist
+    if start_date_was != start_date &&  payments.any?
+      errors.add(:start_date, "cannot be changed if payments exist")
+    end
+  end
+
+  def end_date_must_be_after_last_payment
+    if end_date.present? && end_date < payments.order(due_date: :desc).first.due_date
+      errors.add(:end_date, "must be after last payment due date")
+    end
+  end
+
   def self.frequencies
     { # Week-based frequencies
       'weekly' => { description: 'Once every week', frequency: 'weekly', interval: 1 },
