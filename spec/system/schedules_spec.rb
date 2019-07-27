@@ -104,9 +104,9 @@ RSpec.describe 'Schedules', type: :system do
       expect(page).to have_content("Start Date can't be blank")
     end
 
-    it 'returns to payee details when clicking "Back to Payee" button' do
-      click_link 'Back to Payee'
-      expect(page).to have_current_path(payee_path(payee))
+    it 'returns to schedule details when clicking "Back to Schedule Details" button' do
+      click_link 'Back to Schedule Details'
+      expect(page).to have_current_path(schedule_path(schedule))
     end
 
     it 'resets the form after clicking "Reset Form" button' do
