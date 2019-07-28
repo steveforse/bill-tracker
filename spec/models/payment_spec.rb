@@ -27,21 +27,32 @@ RSpec.describe Payment, type: :model do
   end
 
   describe 'custom validators' do
-    describe 'due_date_between_schedule_start_and_end_dates' do
-      let(:payment) { create(:payment) }
-
+    let(:payment) { create(:payment) }
+    describe 'due_date_after_start_date'  do
       it 'cannot have due_date before start_date' do
         payment.due_date = payment.schedule.start_date - 1.month
         payment.valid?
         expect(payment.errors.messages[:due_date]).to \
           include('must be after schedule start date')
       end
+    end
 
+    describe 'due_date_before_end_date'  do
       it 'cannot have due_date after end_date' do
         payment.due_date = payment.schedule.end_date + 1.month
         payment.valid?
         expect(payment.errors.messages[:due_date]).to \
           include('must be before schedule end date')
+      end
+    end
+
+    describe 'due_date_must_be_valid_recurrence_date' do
+      it 'cannot have a due_date unless it is a recurrence date' do
+        payment.schedule.frequency = 'weekly'
+        payment.due_date += 1.day
+        payment.valid?
+        expect(payment.errors.messages[:due_date]).to \
+          include('must be on a valid schedule recurrence date')
       end
     end
   end
