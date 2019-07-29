@@ -12,6 +12,11 @@ import '../datepicker/stylesheets/datepicker.scss'
 
 // Import our application css
 import '../stylesheets/application.scss'
+import '../stylesheets/navbar.scss'
+
+// Import the logo
+import '../images/logo.png'
+
 import $ from 'jquery'
 
 require('@rails/ujs').start()
