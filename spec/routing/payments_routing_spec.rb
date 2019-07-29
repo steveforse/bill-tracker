@@ -8,6 +8,10 @@ RSpec.describe PaymentsController, type: :routing do
       expect(get: '/schedules/1/payments/new').to route_to('payments#new', schedule_id: '1')
     end
 
+    it 'routes to #index' do
+      expect(get: '/payments').to route_to('payments#index')
+    end
+
     it 'routes to #edit' do
       expect(get: '/payments/1/edit').to route_to('payments#edit', id: '1')
     end

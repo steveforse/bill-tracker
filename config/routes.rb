@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get 'calendar', to: 'calendar#index'
   get 'calendar/events', to: 'calendar#events'
+  get 'payments', to: 'payments#index'
 
   root 'calendar#index'
 end

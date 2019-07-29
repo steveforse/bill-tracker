@@ -5,6 +5,44 @@ require 'rails_helper'
 RSpec.describe 'Payments', type: :system do
   let(:schedule) { create(:schedule) }
 
+  describe 'index' do
+    before do
+      create_list(:payment, 10, schedule: schedule)
+      visit '/payments'
+    end
+
+    let(:payments) { Payment.all }
+
+    it 'renders a card with payments' do
+      assert_selector '.card-header .h4', text: 'Payments'
+      assert_selector '.card-body' do
+        assert_selector 'table.table' do
+          assert_selector 'thead tr' do
+            assert_selector 'th', count: 5
+            assert_selector 'th a.rezort', text: 'Payee'
+            assert_selector 'th a.rezort', text: 'Schedule'
+            assert_selector 'th a.rezort', text: 'Date'
+            assert_selector 'th a.rezort', text: 'Due Date'
+            assert_selector 'th a.rezort', text: 'Amount'
+          end
+          assert_selector 'tbody' do
+            payments.each do |payment|
+              assert_selector 'tr' do
+                assert_selector 'td:nth-of-type(1)', text: payment.schedule.payee.name
+                assert_selector 'td:nth-of-type(2)', text: payment.schedule.name
+                assert_selector 'td:nth-of-type(3)', text: payment.date.to_s
+                assert_selector 'td:nth-of-type(4)', text: payment.due_date.to_s
+                pay = payment
+                assert_selector 'td:nth-of-type(5)', \
+                                text: ActionController::Base.helpers.number_to_currency(pay.amount)
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
   describe 'new page' do
     before { visit "/schedules/#{schedule.id}/payments/new" }
 

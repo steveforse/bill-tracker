@@ -26,13 +26,13 @@ RSpec.describe Schedule, type: :model do
     # Frequency
     it 'uses frequency values from model' do
       expect(model).to validate_inclusion_of(:frequency)
-        .in_array(Schedule.frequencies.keys)
+        .in_array(described_class.frequencies.keys)
         .with_message('must be from dropdown list')
     end
   end
 
   describe 'custom validators' do
-    let(:schedule) { create(:schedule) }
+    let(:schedule) { create(:schedule, frequency: 'monthly', end_date: 1.year.from_now) }
 
     describe '#autopay_requires_minimum_payment' do
       it 'does not require minimum payment if autopay is not set' do
@@ -68,7 +68,7 @@ RSpec.describe Schedule, type: :model do
 
     describe '#end_date_must_be_after_last_payment' do
       it 'cannot have end_date after last payment' do
-        payment = create(:payment, due_date: (schedule.start_date + 1.month), schedule: schedule)
+        payment = create(:payment, due_date: schedule.start_date, schedule: schedule)
         schedule.end_date = payment.due_date - 1.day
         schedule.valid?
         expect(schedule.errors.messages[:end_date]).to \
@@ -91,7 +91,7 @@ RSpec.describe Schedule, type: :model do
 
   describe '#rrule_string' do
     let(:schedule) do
-      Schedule.new(
+      described_class.new(
         name: 'example',
         start_date: Time.zone.today,
         end_date: Time.zone.tomorrow
@@ -105,8 +105,8 @@ RSpec.describe Schedule, type: :model do
         expect(schedule.rrule_string)
           .to include("DTSTART=#{schedule.start_date.strftime('%Y%m%dT%H%M%S')}")
           .and include("UNTIL=#{schedule.end_date.strftime('%Y%m%dT%H%M%S')}")
-          .and include("FREQ=#{Schedule.frequencies[schedule.frequency][:frequency].upcase}")
-          .and include("INTERVAL=#{Schedule.frequencies[schedule.frequency][:interval]}")
+          .and include("FREQ=#{described_class.frequencies[schedule.frequency][:frequency].upcase}")
+          .and include("INTERVAL=#{described_class.frequencies[schedule.frequency][:interval]}")
       end
       # rubocop: enable RSpec/ExampleLength
 
@@ -123,8 +123,8 @@ RSpec.describe Schedule, type: :model do
       expect(schedule.rrule_string)
         .to include("DTSTART=#{schedule.start_date.strftime('%Y%m%dT%H%M%S')}")
         .and include("UNTIL=#{schedule.end_date.strftime('%Y%m%dT%H%M%S')}")
-        .and include("FREQ=#{Schedule.frequencies[schedule.frequency][:frequency].upcase}")
-        .and include("INTERVAL=#{Schedule.frequencies[schedule.frequency][:interval]}")
+        .and include("FREQ=#{described_class.frequencies[schedule.frequency][:frequency].upcase}")
+        .and include("INTERVAL=#{described_class.frequencies[schedule.frequency][:interval]}")
         .and include("BYMONTHDAY=#{schedule.start_date.day},")
     end
 
@@ -133,8 +133,8 @@ RSpec.describe Schedule, type: :model do
       expect(schedule.rrule_string)
         .to include("DTSTART=#{schedule.start_date.strftime('%Y%m%dT%H%M%S')}")
         .and include("UNTIL=#{schedule.end_date.strftime('%Y%m%dT%H%M%S')}")
-        .and include("FREQ=#{Schedule.frequencies[schedule.frequency][:frequency].upcase}")
-        .and include("INTERVAL=#{Schedule.frequencies[schedule.frequency][:interval]}")
+        .and include("FREQ=#{described_class.frequencies[schedule.frequency][:frequency].upcase}")
+        .and include("INTERVAL=#{described_class.frequencies[schedule.frequency][:interval]}")
         .and include("BYMONTH=#{schedule.start_date.month},")
     end
     # rubocop: enable RSpec/ExampleLength
