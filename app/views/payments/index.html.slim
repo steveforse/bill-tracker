@@ -1,0 +1,29 @@
+.card
+  .card-header
+    .d-flex
+      .h4.mr-auto Payments
+
+  .card-body.p-0
+    - if @payments.any?
+      .table-responsive
+        table.table.table-striped.table-bordered.table-hover.table-sm
+          thead.thead-light
+            tr
+              th = sortable 'Payee', :payee
+              th = sortable 'Schedule', :schedule
+              th = sortable 'Date', :date
+              th = sortable 'Due Date', :due_date
+              th = sortable 'Amount', :amount
+          tbody
+            - @payments.each do |payment|
+              tr
+                td = payment.schedule.payee.name
+                td = payment.schedule.name
+                td = payment.date
+                td = payment.due_date
+                td.text-right = payment.amount
+        = paginate  @payments
+    - else
+      .h5.text-center.p-3 There are currenty no payments in the system
+
+

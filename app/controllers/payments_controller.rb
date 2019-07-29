@@ -14,6 +14,16 @@ class PaymentsController < ApplicationController
     @payment.schedule = @schedule
   end
 
+  # GET /payments/
+  def index
+    @payments = Payment.select('payments.*, schedules.name as schedule, payees.name as payee')
+                       .joins(schedule: :payee)
+                       .includes(schedule: :payee)
+                       .rezort(params[:sort], 'date DESC')
+                       .page(params[:page])
+                       .decorate
+  end
+
   # GET /payments/1/edit
   def edit; end
 

@@ -28,7 +28,8 @@ RSpec.describe Payment, type: :model do
 
   describe 'custom validators' do
     let(:payment) { create(:payment) }
-    describe 'due_date_after_start_date'  do
+
+    describe 'due_date_after_start_date' do
       it 'cannot have due_date before start_date' do
         payment.due_date = payment.schedule.start_date - 1.month
         payment.valid?
