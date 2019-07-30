@@ -1,5 +1,4 @@
 import '@rails/ujs'
-import 'bootstrap'
 import dataConfirmModal from 'data-confirm-modal'
 
 dataConfirmModal.setDefaults({
