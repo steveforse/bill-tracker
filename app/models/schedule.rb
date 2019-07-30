@@ -36,8 +36,8 @@ class Schedule < ApplicationRecord
   end
 
   def end_date_must_be_after_last_payment
-    return if end_date.blank? || payments.empty? || (
-      end_date > payments.order(due_date: :desc).first.due_date)
+    return if end_date.blank? || payments.empty?
+    return if end_date > payments.order(due_date: :desc).first.due_date
 
     errors.add(:end_date, 'must be after last payment due date')
   end
@@ -64,6 +64,31 @@ class Schedule < ApplicationRecord
   def rrule_string
     [rrule_dtstart, rrule_until, rrule_frequency, rrule_interval, rrule_semimonthly_bymonthdays,
      rrule_semiannually_bymonth].compact.join(';')
+  end
+
+  def generate_autopayments
+    today = Time.zone.today
+    payments = schedule.payments
+    Schedule.each do |schedule|
+      continue if !schedule.active? || payments.where(due_date: today).any? ||
+                  !recurrence_date?(today)
+      payments.create(due_date: today, date: today, amount: schedule.minimum_payemnt,
+                      comment: 'Created by autopay')
+    end
+  end
+
+  def recurrence_date?(date)
+    rrule.between((date + 1.day).to_datetime, (date - 1.day).to_datetime).includes? date
+  end
+
+  def rrule
+    dateparts = [dtstart.year, dtstart.month, dtstart.day]
+    RRule.parse(schedule.rrule_string, dtstart: Time.zone.local(*dateparts))
+  end
+
+  def active?(date = nil)
+    date = Time.zone.today if date.nil?
+    date >= start_date && (end_date.nil? || date <= end_date)
   end
 
   private
