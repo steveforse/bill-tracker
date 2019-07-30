@@ -44,7 +44,7 @@ gem 'simple_form'
 gem 'puma', '~> 3.11'
 
 # Reduces boot times through caching
-gem 'bootsnap', '>= 1.4.2', require: false
+#gem 'bootsnap', '>= 1.4.2', require: false
 
 ##############
 # JAVASCRIPT #
