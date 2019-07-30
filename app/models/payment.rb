@@ -30,14 +30,10 @@ class Payment < ApplicationRecord
     errors.add(:due_date, 'must be before schedule end date')
   end
 
-  # rubocop: disable Metrics/AbcSize
   def due_date_must_be_valid_recurrence_date
     return if !schedule || !due_date
-
-    return if schedule.rrule.between((due_date - 1.day).to_datetime, (due_date + 1.day).to_datetime)
-                      .include? due_date
+    return if schedule.recurrence_date? due_date
 
     errors.add(:due_date, 'must be on a valid schedule recurrence date')
   end
-  # rubocop: enable Metrics/AbcSize
 end

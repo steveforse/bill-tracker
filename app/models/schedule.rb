@@ -78,12 +78,7 @@ class Schedule < ApplicationRecord
   end
 
   def recurrence_date?(date)
-    rrule.between((date + 1.day).to_datetime, (date - 1.day).to_datetime).includes? date
-  end
-
-  def rrule
-    dateparts = [dtstart.year, dtstart.month, dtstart.day]
-    RRule.parse(schedule.rrule_string, dtstart: Time.zone.local(*dateparts))
+    rrule.between((date - 1.day).to_datetime, (date + 1.day).to_datetime).include? date
   end
 
   def active?(date = nil)
@@ -92,6 +87,11 @@ class Schedule < ApplicationRecord
   end
 
   private
+
+  def rrule
+    dateparts = [start_date.year, start_date.month, start_date.day]
+    RRule.parse(rrule_string, dtstart: Time.zone.local(*dateparts))
+  end
 
   def rrule_dtstart
     "DTSTART=#{rrule_date_format(start_date)}"
