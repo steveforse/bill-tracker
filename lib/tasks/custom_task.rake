@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-unless Rails.env.production? 
+unless Rails.env.production?
   require 'rubocop/rake_task'
   require 'bundler/audit/task'
   require 'reek/rake/task'
