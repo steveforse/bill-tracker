@@ -10,6 +10,7 @@ AllCops:
       - 'node_modules/**/*'
       - 'test/**/*'
       - 'db/schema.rb'
+      - 'config/deploy.rb'
 
 Metrics/LineLength:
   Max: 100
