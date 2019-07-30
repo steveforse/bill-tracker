@@ -17,8 +17,8 @@
           tbody
             - @payments.each do |payment|
               tr
-                td = payment.schedule.payee.name
-                td = payment.schedule.name
+                td = link_to payment.schedule.payee.name, payee_path(payment.schedule.payee)
+                td = link_to payment.payment.schedule.name, schedule_path(payment.schedule)
                 td = payment.date
                 td = payment.due_date
                 td.text-right = payment.amount
