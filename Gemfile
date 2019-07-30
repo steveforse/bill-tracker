@@ -58,6 +58,11 @@ gem 'webpacker', '~> 4.0'
 ########
 gem 'rrule' # Recurrence rules following iCalendar RFC 5545
 
+########
+# JOBS #
+########
+gem 'whenever', require: false
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -111,11 +116,11 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
-  gem 'capistrano',         require: false
-  gem 'capistrano-rbenv',     require: false
-  gem 'capistrano-rails',   require: false
+  gem 'capistrano', require: false
   gem 'capistrano-bundler', require: false
-  gem 'capistrano3-puma',   require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rbenv', require: false
+  gem 'capistrano3-puma', require: false
 end
 
 group :test do

@@ -167,6 +167,7 @@ GEM
       xpath (~> 3.2)
     childprocess (1.0.1)
       rake (< 13.0)
+    chronic (0.10.2)
     code_analyzer (0.4.8)
       sexp_processor
     codeclimate-engine-rb (0.4.1)
@@ -429,6 +430,8 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
+    whenever (1.0.0)
+      chronic (>= 0.6.3)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.1.9)
@@ -489,6 +492,7 @@ DEPENDENCIES
   web-console (>= 3.3.0)
   webdrivers
   webpacker (~> 4.0)
+  whenever
 
 RUBY VERSION
    ruby 2.6.3p62
