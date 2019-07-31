@@ -3,6 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe PaymentsController, type: :controller do
+  before do
+    sign_in create(:user)
+  end
+
   let(:schedule) { create(:schedule) }
   let(:payment) { create(:payment, schedule: schedule) }
 

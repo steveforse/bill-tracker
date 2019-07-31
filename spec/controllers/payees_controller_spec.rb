@@ -3,6 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe PayeesController, type: :controller do
+  before do
+    sign_in create(:user)
+  end
+
   let(:valid_attributes) do
     attributes_for(:payee)
   end

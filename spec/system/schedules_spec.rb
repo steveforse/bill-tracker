@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Schedules', type: :system do
+  before { sign_in create(:user) }
+
   let(:payee) { create(:payee) }
 
   describe 'new page', js: true do

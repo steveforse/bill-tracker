@@ -3,6 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe SchedulesController, type: :controller do
+  before do
+    sign_in create(:user)
+  end
+
   # This should return the minimal set of attributes required to create a valid
   # Schedule. As you add validations to Schedule, be sure to
   # adjust the attributes here as well.

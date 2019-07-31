@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Payments', type: :system do
+  before { sign_in create(:user) }
+
   let(:schedule) { create(:schedule) }
 
   describe 'index' do
