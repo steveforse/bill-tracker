@@ -25,5 +25,17 @@ RSpec.describe 'Navbar', type: :system do
         end
       end
     end
+
+    it 'has the logout button' do
+      visit '/'
+      assert_selector 'nav.navbar' do
+        assert_selector 'a.btn.btn-danger[href="/users/sign_out"]', text: 'Logout'
+      end
+    end
+
+    it 'does not display when signed out' do
+      sign_out create(:user)
+      assert_selector 'nav.navbar', count: 0
+    end
   end
 end
