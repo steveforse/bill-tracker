@@ -1,0 +1,14 @@
+.card.mt-4
+  .card-header
+    .h4 Forgot your password?
+  .card-body
+    = simple_form_for(resource, as: resource_name, url: password_path(resource_name), \
+                      html: { method: :post }) do |f|
+      = f.error_notification
+      .form-inputs
+        = f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email" }
+      .form-actions
+        .col-sm-9.offset-sm-3
+          = f.button :submit, "Reset Via Email", class: 'btn btn-primary'
+        .col-sm-9.offset-sm-3
+          = render "devise/shared/links"
