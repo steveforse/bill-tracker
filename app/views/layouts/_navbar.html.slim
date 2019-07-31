@@ -1,14 +1,16 @@
-nav.navbar.navbar-expand-md.navbar-light.bg-light.mb-4
-  a.navbar-brand href="/"
-    = image_pack_tag 'logo.png', size: '30x30', class: 'mr-2'
-    | Bill Tracker
-  button.navbar-toggler aria-controls="navbarCollapse" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarCollapse" data-toggle="collapse" type="button"
-    span.navbar-toggler-icon
-  #navbarCollapse.collapse.navbar-collapse
-    ul.navbar-nav.mr-auto
-      li.nav-item
-        a.nav-link href="/calendar"  Calendar
-      li.nav-item
-        a.nav-link href="/payments"  Payments
-      li.nav-item
-        a.nav-link href="/payees"  Setup
+- if user_signed_in?
+  nav.navbar.navbar-expand-md.navbar-light.bg-light.mb-4
+    a.navbar-brand href="/"
+      = image_pack_tag 'logo.png', size: '30x30', class: 'mr-2'
+      | Bill Tracker
+    button.navbar-toggler aria-controls="navbarCollapse" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarCollapse" data-toggle="collapse" type="button"
+      span.navbar-toggler-icon
+    #navbarCollapse.collapse.navbar-collapse
+      ul.navbar-nav.mr-auto
+        li.nav-item
+          a.nav-link href="/calendar"  Calendar
+        li.nav-item
+          a.nav-link href="/payments"  Payments
+        li.nav-item
+          a.nav-link href="/payees"  Setup
+    = button_danger 'Logout', destroy_user_session_path, 'sign-out-alt', method: :delete, class: 'btn btn-primary'
