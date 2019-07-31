@@ -2,6 +2,8 @@
 
 # Should contain functions common to all controllers
 class ApplicationController < ActionController::Base
+  before_action :authenticate_user!
+
   def convert_to_sql_dates(attributes)
     attributes = [attributes] unless attributes.is_a? Array
 
