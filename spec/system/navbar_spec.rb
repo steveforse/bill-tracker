@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Navbar', type: :system do
   before { sign_in create(:user) }
+
   describe 'navbar' do
     it 'has the logo and icon' do
       visit '/'

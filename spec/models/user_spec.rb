@@ -4,14 +4,15 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) { create(:user) }
-  it { should validate_presence_of :email  }
-  it { should validate_presence_of :password }
+
+  it { is_expected.to validate_presence_of :email }
+  it { is_expected.to validate_presence_of :password }
 
   it 'authenticates password' do
     password = 'password123'
     user.password = password
     user.password_confirmation = password
-    expect(user.valid_password?('password123')).to be_truthy
+    expect(user).to be_valid_password('password123')
   end
 
   it 'rejects bad password' do
