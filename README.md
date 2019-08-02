@@ -22,7 +22,7 @@ Deployment is done via Capistrano. Configure config/deploy.rb:
 ## Docker
 Docker build scripts are provided in the docker folder. The app runs on port 80 in the container.
 
-# Test Suite
+## Test Suite
 Testing is done using rspec and capybara for system/integration tests. The rake test is overridden to also run
 various static analyzers (rubocop, rails-best-practices, brakeman, etc.)
 
