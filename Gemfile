@@ -44,7 +44,7 @@ gem 'simple_form'
 ##########
 # SERVER #
 ##########
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 
 # Reduces boot times through caching
 gem 'bootsnap', '>= 1.4.2', require: false
